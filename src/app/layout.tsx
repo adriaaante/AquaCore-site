@@ -1,0 +1,58 @@
+import type { Metadata, Viewport } from "next";
+import { site } from "@/config/site";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — программа для автомойки №1 по соотношению цена/возможности`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  keywords: [
+    "программа для автомойки",
+    "CRM для автомойки",
+    "автоматизация автомойки",
+    "учёт на автомойке",
+    "распознавание номеров автомойка",
+    "программа лояльности автомойка",
+    "AquaCore",
+  ],
+  authors: [{ name: site.name }],
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: site.url,
+    siteName: site.name,
+    title: `${site.name} — система управления автомойкой`,
+    description: site.description,
+    images: [{ url: site.images.hero, width: 1200, height: 675, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — система управления автомойкой`,
+    description: site.description,
+    images: [site.images.hero],
+  },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/icon.svg",
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0ea5e9",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="ru">
+      <body>{children}</body>
+    </html>
+  );
+}

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { site } from "@/config/site";
 import "./globals.css";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -35,8 +37,8 @@ export const metadata: Metadata = {
     images: [site.images.hero],
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    apple: "/icon.svg",
+    icon: [{ url: `${base}/icon.svg`, type: "image/svg+xml" }],
+    apple: `${base}/icon.svg`,
   },
   robots: { index: true, follow: true },
 };

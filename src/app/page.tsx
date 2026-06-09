@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/config/site";
-import { benefits, faq, keyFeatures, steps } from "@/config/content";
+import { benefits, faq, keyFeatures, scenarios, steps } from "@/config/content";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Icons } from "@/components/Icons";
@@ -19,6 +19,7 @@ export default function HomePage() {
       <main className="overflow-x-hidden">
         <Hero />
         <Pain />
+        <MultiService />
         <KeyFeatures />
         <Anpr />
         <Loyalty />
@@ -44,16 +45,16 @@ function Hero() {
       <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
         <Reveal>
           <span className="eyebrow">
-            <Icons.sparkles className="h-3.5 w-3.5" /> Программа для автомойки
+            <Icons.sparkles className="h-3.5 w-3.5" /> Программа для автомойки и шиномонтажа
           </span>
           <h1 className="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.4rem]">
-            Автомойка под полным контролем — и{" "}
+            Мойка и шиномонтаж под полным контролем — и{" "}
             <span className="bg-brand-gradient bg-clip-text text-transparent">доход растёт</span>
           </h1>
           <p className="lead mt-5 max-w-xl">
             AquaCore — единая система: доска заказов в реальном времени, распознавание
-            госномеров, программа лояльности, контроль кассы, зарплата и аналитика. Всё, чтобы
-            навести порядок и заработать больше.
+            госномеров, программа лояльности, контроль кассы, зарплата и аналитика. С ней всё
+            просто, аналитика под рукой, а бизнес начинает приносить больше дохода.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="#zayavka" className="btn-primary">
@@ -123,6 +124,43 @@ function Pain() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────── MULTI-SERVICE ────────────────────────── */
+function MultiService() {
+  return (
+    <section id="napravleniya" className="section">
+      <div className="container-x">
+        <SectionHeading
+          eyebrow="Одна программа — все направления"
+          title="Не только мойка: ещё и шиномонтаж, и детейлинг"
+          text="AquaCore не привязан к одному виду работ. Мойка, шиномонтаж и детейлинг живут в одной системе и одной базе клиентов — а вся аналитика по доходу всегда под рукой."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {scenarios.map((s, i) => {
+            const Icon = Icons[s.icon];
+            return (
+              <Reveal key={s.title} delay={(i % 4) * 70}>
+                <div className="card card-hover h-full">
+                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-gradient text-white shadow-brand">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-4 font-bold text-ink">{s.title}</h3>
+                  <p className="mt-2 text-sm text-ink-muted">{s.text}</p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+        <Reveal className="mt-10 text-center">
+          <p className="text-sm text-ink-muted">
+            Один абонемент закрывает всё направление авто-ухода — без зоопарка из
+            нескольких программ.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

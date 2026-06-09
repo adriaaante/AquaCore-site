@@ -7,9 +7,9 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/Section";
 
 export const metadata: Metadata = {
-  title: "Возможности программы для автомойки",
+  title: "Возможности программы для автомойки и шиномонтажа",
   description:
-    "Полный список возможностей AquaCore: доска заказов, распознавание номеров, лояльность, зарплата, касса, аналитика, аудит, клиентский кабинет, SMS и Telegram.",
+    "Полный список возможностей AquaCore: доска заказов, распознавание номеров, лояльность, зарплата, касса, аналитика, аудит, клиентский кабинет, SMS и Telegram. Подходит для мойки, шиномонтажа и детейлинга.",
 };
 
 type Group = {
@@ -153,8 +153,9 @@ export default function VozmozhnostiPage() {
                 Всё, что умеет AquaCore
               </h1>
               <p className="lead mx-auto mt-5 max-w-2xl">
-                Полный обзор функций системы управления автомойкой. Почти всё доступно уже в
-                базовом тарифе за 50 000 ₽ в год.
+                Полный обзор функций системы управления автомойкой и шиномонтажом. Всё просто,
+                аналитика под рукой, а бизнес приносит больше. Почти всё доступно уже в базовом
+                тарифе за 50 000 ₽ в год.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link href="/#zayavka" className="btn-primary">

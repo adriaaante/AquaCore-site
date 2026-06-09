@@ -9,9 +9,9 @@ import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 
 export const metadata: Metadata = {
-  title: "Тарифы — программа для автомойки",
+  title: "Тарифы — программа для автомойки и шиномонтажа",
   description:
-    "Тарифы AquaCore: базовый — 50 000 ₽ в год (огромный функционал управления мойкой), расширенный с клиентским кабинетом и SMS — 90 000 ₽ в год.",
+    "Тарифы AquaCore: базовый — 50 000 ₽ в год (огромный функционал управления мойкой и шиномонтажом), расширенный с клиентским кабинетом и SMS — 90 000 ₽ в год.",
 };
 
 const compare: { feature: string; basic: boolean; pro: boolean }[] = [

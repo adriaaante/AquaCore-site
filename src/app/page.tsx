@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Icons } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading, FeatureCard } from "@/components/Section";
-import { DashboardMock } from "@/components/DashboardMock";
+import { ShotFrame } from "@/components/ShotFrame";
 import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 import { FaqJsonLd } from "@/components/JsonLd";
@@ -81,12 +81,11 @@ function Hero() {
 
         <Reveal delay={120} className="relative">
           <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-brand-gradient opacity-10 blur-2xl" />
-          <DashboardMock />
-          <img
-            src={site.images.hero}
-            alt="Современная автомойка AquaCore"
-            loading="eager"
-            className="mt-5 h-40 w-full rounded-2xl border border-slate-200 object-cover shadow-card sm:h-48"
+          <ShotFrame
+            file="manager-dashboard.jpg"
+            alt="Дашборд управляющего AquaCore: выручка, средний чек, визиты, график"
+            label="AquaCore · Дашборд управляющего"
+            crop
           />
         </Reveal>
       </div>
@@ -382,7 +381,11 @@ function Analytics() {
           </ul>
         </Reveal>
         <Reveal delay={120}>
-          <DashboardMock />
+          <ShotFrame
+            file="manager-analytics-30d.jpg"
+            alt="Аналитика AquaCore за 30 дней: выручка, ФОТ, маржа, топ услуг и клиентов"
+            label="AquaCore · Аналитика за 30 дней"
+          />
         </Reveal>
       </div>
     </section>

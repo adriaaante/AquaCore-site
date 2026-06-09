@@ -7,7 +7,7 @@ import { Icons } from "./Icons";
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const src = (file: string) => `${base}/screens/${file}`;
 
-const ROLES = ["Все", "Управляющий", "Администратор", "Мойщик", "Клиент"] as const;
+const ROLES = ["Все", "Управляющий", "Администратор", "Исполнитель", "Клиент"] as const;
 
 export function Screenshots() {
   const [role, setRole] = useState<(typeof ROLES)[number]>("Все");

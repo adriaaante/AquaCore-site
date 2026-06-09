@@ -24,7 +24,7 @@ const compare: { feature: string; basic: boolean; pro: boolean }[] = [
   { feature: "Отчёты, аналитика, экспорт в Excel", basic: true, pro: true },
   { feature: "Аудит и контроль злоупотреблений", basic: true, pro: true },
   { feature: "Распознавание госномеров", basic: true, pro: true },
-  { feature: "Кабинеты менеджера, админа, мойщика", basic: true, pro: true },
+  { feature: "Кабинеты менеджера, админа, исполнителя", basic: true, pro: true },
   { feature: "Модуль «Клиентский кабинет» (история, бонусы)", basic: false, pro: true },
   { feature: "Онлайн-запись клиентов", basic: false, pro: true },
   { feature: "Модуль «SMS и Telegram-уведомления»", basic: false, pro: true },

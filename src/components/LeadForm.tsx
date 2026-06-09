@@ -8,6 +8,23 @@ type Status = "idle" | "sending" | "ok" | "error";
 
 const KEY_PLACEHOLDER = "REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY";
 
+/** Русские сообщения для встроенной валидации браузера (по умолчанию они на
+ *  языке браузера, напр. «Please fill out this field»). */
+function ruValidate(el: HTMLInputElement | HTMLTextAreaElement) {
+  const v = el.validity;
+  if (v.valueMissing) {
+    el.setCustomValidity(
+      el.type === "checkbox"
+        ? "Подтвердите согласие на обработку персональных данных"
+        : "Пожалуйста, заполните это поле",
+    );
+  } else if (v.typeMismatch || v.patternMismatch) {
+    el.setCustomValidity("Проверьте правильность ввода");
+  } else {
+    el.setCustomValidity("");
+  }
+}
+
 export function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
   const keyReady =
@@ -107,6 +124,8 @@ export function LeadForm() {
           type="checkbox"
           name="consent"
           required
+          onInvalid={(e) => ruValidate(e.currentTarget)}
+          onChange={(e) => ruValidate(e.currentTarget)}
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-brand-600 focus:ring-brand-400"
         />
         <span>
@@ -160,6 +179,8 @@ function Field({
         type={type}
         placeholder={placeholder}
         required={required}
+        onInvalid={(e) => ruValidate(e.currentTarget)}
+        onInput={(e) => ruValidate(e.currentTarget)}
         className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       />
     </label>

@@ -52,7 +52,7 @@ function Hero() {
           <span className="eyebrow">
             <Icons.sparkles className="h-3.5 w-3.5" /> Программа для автомойки и шиномонтажа
           </span>
-          <h1 className="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="mt-5 text-[2rem] font-extrabold leading-[1.1] tracking-tight text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem]">
             Мойка и шиномонтаж под полным контролем — и{" "}
             <span className="bg-brand-gradient bg-clip-text text-transparent">доход растёт</span>
           </h1>

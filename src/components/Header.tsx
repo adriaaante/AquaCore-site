@@ -7,6 +7,7 @@ import { Icons } from "./Icons";
 
 const nav = [
   { label: "Направления", href: "/#napravleniya" },
+  { label: "Экраны", href: "/#skrinshoty" },
   { label: "Возможности", href: "/vozmozhnosti/" },
   { label: "Выгоды", href: "/#vygody" },
   { label: "Тарифы", href: "/tarify/" },

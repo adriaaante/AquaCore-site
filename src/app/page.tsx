@@ -10,6 +10,7 @@ import { DashboardMock } from "@/components/DashboardMock";
 import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 import { FaqJsonLd } from "@/components/JsonLd";
+import { Screenshots } from "@/components/Screenshots";
 import { LeadForm } from "@/components/LeadForm";
 
 export default function HomePage() {
@@ -20,6 +21,7 @@ export default function HomePage() {
         <Hero />
         <Pain />
         <MultiService />
+        <ProductShots />
         <KeyFeatures />
         <Anpr />
         <Loyalty />
@@ -161,6 +163,24 @@ function MultiService() {
             нескольких программ.
           </p>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────────────── PRODUCT SHOTS ──────────────────────── */
+function ProductShots() {
+  return (
+    <section id="skrinshoty" className="section bg-slate-50">
+      <div className="container-x">
+        <SectionHeading
+          eyebrow="Как это выглядит"
+          title="Реальные экраны системы, а не картинки"
+          text="Это скриншоты работающего приложения AquaCore. Нажмите на любой, чтобы рассмотреть детально."
+        />
+        <div className="mt-12">
+          <Screenshots />
+        </div>
       </div>
     </section>
   );

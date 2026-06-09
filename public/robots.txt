@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aquacore.ru/sitemap.xml
+Sitemap: https://aqua-core.ru/sitemap.xml

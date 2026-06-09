@@ -9,6 +9,7 @@ import { SectionHeading, FeatureCard } from "@/components/Section";
 import { DashboardMock } from "@/components/DashboardMock";
 import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
+import { FaqJsonLd } from "@/components/JsonLd";
 import { LeadForm } from "@/components/LeadForm";
 
 export default function HomePage() {
@@ -495,6 +496,7 @@ function Steps() {
 function FaqSection() {
   return (
     <section id="faq" className="section">
+      <FaqJsonLd />
       <div className="container-x">
         <SectionHeading eyebrow="Вопросы и ответы" title="Частые вопросы" />
         <div className="mt-12">

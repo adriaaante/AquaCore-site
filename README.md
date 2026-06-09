@@ -24,12 +24,12 @@ download-images.sh        локализация AI-изображений
 
 ## ⚙️ Что отредактировать под себя
 Откройте **`src/config/site.ts`** и замените заглушки:
-- `contacts.phone`, `contacts.telegram`, `contacts.whatsappHref` — ваши контакты;
+- `contacts.telegram`, `contacts.whatsappHref` — ваши контакты;
 - `web3formsAccessKey` — ключ с [web3forms.com](https://web3forms.com) для приёма заявок с формы
   (бесплатно). Пока ключ не вставлен, форма открывает почтовый клиент и пишет на ваш email;
 - `url` — ваш домен (для SEO).
 
-Email `adriaaante@gmail.com` уже подставлен.
+Email `info@aqua-core.ru` и телефон `+7 966 127-77-67` уже подставлены.
 
 ## Локальный запуск
 ```bash

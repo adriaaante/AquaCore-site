@@ -11,6 +11,7 @@ import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 import { FaqJsonLd } from "@/components/JsonLd";
 import { Screenshots } from "@/components/Screenshots";
+import { RoiCalculator } from "@/components/RoiCalculator";
 import { LeadForm } from "@/components/LeadForm";
 
 export default function HomePage() {
@@ -22,10 +23,12 @@ export default function HomePage() {
         <Pain />
         <MultiService />
         <ProductShots />
+        <Themes />
         <KeyFeatures />
         <Anpr />
         <Loyalty />
         <Benefits />
+        <Roi />
         <Analytics />
         <Roles />
         <Security />
@@ -60,13 +63,16 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="#zayavka" className="btn-primary">
-              Оставить заявку <Icons.arrow className="h-4 w-4" />
+              Попробовать 14 дней бесплатно <Icons.arrow className="h-4 w-4" />
             </Link>
             <Link href="/vozmozhnosti/" className="btn-secondary">
               Смотреть возможности
             </Link>
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-muted">
+            <span className="inline-flex items-center gap-2 font-semibold text-brand-700">
+              <Icons.gift className="h-4 w-4 text-brand-500" /> 14 дней бесплатно
+            </span>
             <span className="inline-flex items-center gap-2">
               <Icons.check className="h-4 w-4 text-brand-500" /> от 50 000 ₽ в год
             </span>
@@ -185,6 +191,82 @@ function ProductShots() {
   );
 }
 
+/* ───────────────────────────── THEMES ─────────────────────────── */
+function ThemePanel({ dark }: { dark: boolean }) {
+  const cardBg = dark ? "bg-slate-800" : "bg-slate-100";
+  const bar = dark ? "bg-slate-700" : "bg-slate-200";
+  const accent = dark ? "bg-brand-400" : "bg-brand-500";
+  return (
+    <div
+      className={`rounded-2xl border p-4 ${
+        dark ? "border-white/10 bg-slate-900" : "border-slate-200 bg-white"
+      }`}
+    >
+      <div className="flex items-center gap-1.5">
+        <span className={`h-2.5 w-2.5 rounded-full ${accent}`} />
+        <span className={`h-2 w-12 rounded-full ${bar}`} />
+        <span className={`ml-auto h-2 w-6 rounded-full ${bar}`} />
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className={`rounded-lg p-2 ${cardBg}`}>
+            <span className={`block h-1.5 w-8 rounded-full ${bar}`} />
+            <span className={`mt-1.5 block h-2.5 w-10 rounded-full ${accent} opacity-80`} />
+          </div>
+        ))}
+      </div>
+      <div className={`mt-2 flex h-16 items-end gap-1.5 rounded-lg p-2 ${cardBg}`}>
+        {[40, 65, 50, 80, 70, 90].map((h, i) => (
+          <span key={i} className={`flex-1 rounded-sm ${accent} opacity-70`} style={{ height: `${h}%` }} />
+        ))}
+      </div>
+      <p className={`mt-2 text-center text-[11px] font-semibold ${dark ? "text-slate-300" : "text-ink-muted"}`}>
+        {dark ? "Тёмная" : "Светлая"}
+      </p>
+    </div>
+  );
+}
+
+function Themes() {
+  return (
+    <section className="section">
+      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <span className="eyebrow">
+            <Icons.sparkles className="h-3.5 w-3.5" /> Внешний вид
+          </span>
+          <h2 className="mt-5 h-title">Светлая и тёмная тема — на выбор</h2>
+          <p className="lead mt-4">
+            Интерфейс подстраивается под время суток и предпочтения сотрудника. Днём —
+            светлая тема, вечером и в боксе — тёмная, чтобы не уставали глаза. Переключается
+            одной кнопкой в шапке (её видно на скриншотах выше).
+          </p>
+          <ul className="mt-6 space-y-3">
+            {[
+              "Автоматически по настройкам устройства или вручную",
+              "Своя тема у каждого сотрудника и кабинета",
+              "Тёмная тема комфортна на планшете администратора в боксе",
+            ].map((t) => (
+              <li key={t} className="flex items-start gap-3 text-ink-soft">
+                <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-brand-50 text-brand-600">
+                  <Icons.check className="h-3.5 w-3.5" />
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            <ThemePanel dark={false} />
+            <ThemePanel dark={true} />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ───────────────────────── KEY FEATURES ───────────────────────── */
 function KeyFeatures() {
   return (
@@ -276,20 +358,18 @@ function Loyalty() {
     <section className="section">
       <div className="container-x grid items-center gap-12 lg:grid-cols-2">
         <Reveal className="order-2 lg:order-1">
-          <div className="relative mx-auto max-w-sm">
-            <img
-              src={site.images.client}
-              alt="Довольный клиент автомойки с приложением лояльности"
-              loading="lazy"
-              className="w-full rounded-2xl border border-slate-200 object-cover shadow-card"
-            />
-            <div className="absolute -right-4 -top-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-brand">
-              <p className="text-xs text-ink-muted">Баланс бонусов</p>
-              <p className="text-2xl font-extrabold text-brand-600">+1 240 ₽</p>
+          <div className="relative mx-auto w-full max-w-[300px]">
+            <div className="overflow-hidden rounded-[2.2rem] border-[7px] border-slate-900 bg-slate-900 shadow-brand">
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/screens/client-bonuses.jpg`}
+                alt="Бонусы клиента в кабинете AquaCore: баланс, кешбэк и уровень лояльности"
+                loading="lazy"
+                className="block w-full"
+              />
             </div>
-            <div className="absolute -bottom-4 left-4 rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-card">
-              <p className="text-xs font-semibold text-ink">Уровень «Серебро» · −5%</p>
-            </div>
+            <span className="absolute -right-3 -top-3 inline-flex items-center gap-1 rounded-full bg-brand-gradient px-3 py-1.5 text-xs font-bold text-white shadow-brand">
+              <Icons.check className="h-3.5 w-3.5" /> реальный экран
+            </span>
           </div>
         </Reveal>
         <Reveal delay={100} className="order-1 lg:order-2">
@@ -344,6 +424,29 @@ function Benefits() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────────────────── ROI ────────────────────────────── */
+function Roi() {
+  return (
+    <section id="vygoda" className="section">
+      <div className="container-x">
+        <SectionHeading
+          eyebrow="Калькулятор выгоды"
+          title="Посчитайте, сколько добавит AquaCore"
+          text="Прикиньте прирост выручки на цифрах вашей мойки — за пару секунд."
+        />
+        <div className="mt-12">
+          <RoiCalculator />
+        </div>
+        <Reveal className="mt-8 text-center">
+          <Link href="#zayavka" className="btn-primary">
+            Хочу так же — оставить заявку <Icons.arrow className="h-4 w-4" />
+          </Link>
+        </Reveal>
       </div>
     </section>
   );
@@ -508,7 +611,7 @@ function Pricing() {
         <SectionHeading
           eyebrow="Тарифы"
           title="Честная цена за огромный функционал"
-          text="Базовый тариф уже включает почти всё. Дешевле аналогов — и без скрытых доплат."
+          text="Первые 14 дней — бесплатно, без карты. Базовый тариф уже включает почти всё. Дешевле аналогов — и без скрытых доплат."
         />
         <div className="mt-12">
           <PricingCards />
@@ -578,8 +681,9 @@ function CtaForm() {
             <span className="eyebrow">Заявка</span>
             <h2 className="mt-4 h-title">Покажем AquaCore на примере вашей мойки</h2>
             <p className="lead mt-4">
-              Оставьте контакты — проведём демонстрацию, ответим на вопросы и поможем рассчитать
-              выгоду для вашего бизнеса.
+              Оставьте контакты — проведём демонстрацию, дадим{" "}
+              <span className="font-semibold text-brand-600">14 дней бесплатно</span> и поможем
+              рассчитать выгоду для вашего бизнеса.
             </p>
             <div className="mt-8 space-y-3 text-sm">
               <a

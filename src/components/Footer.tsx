@@ -7,7 +7,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-slate-200 bg-slate-50">
-      <div className="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr]">
         <div>
           <Logo />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-muted">
@@ -78,12 +78,36 @@ export function Footer() {
             Оставить заявку
           </Link>
         </div>
+
+        <div>
+          <h3 className="text-sm font-bold text-ink">Документы</h3>
+          <ul className="mt-4 space-y-2.5 text-sm text-ink-muted">
+            <li>
+              <Link href="/privacy/" className="hover:text-brand-600">
+                Политика конфиденциальности
+              </Link>
+            </li>
+            <li>
+              <Link href="/oferta/" className="hover:text-brand-600">
+                Публичная оферта
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className="border-t border-slate-200">
-        <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-xs text-ink-muted sm:flex-row">
-          <p>© {year} {site.name}. Все права защищены.</p>
-          <p>{site.contacts.city}</p>
+        <div className="container-x flex flex-col gap-3 py-6 text-xs leading-relaxed text-ink-muted lg:flex-row lg:items-start lg:justify-between">
+          <div className="space-y-0.5">
+            <p>{site.legal.orgName}</p>
+            <p>
+              ИНН {site.legal.inn} · ОГРНИП {site.legal.ogrnip}
+            </p>
+            <p>{site.legal.address}</p>
+          </div>
+          <p className="lg:text-right">
+            © {year} {site.name}. Все права защищены.
+          </p>
         </div>
       </div>
     </footer>

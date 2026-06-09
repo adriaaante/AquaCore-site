@@ -92,6 +92,9 @@ function PlanCard({
         <span className="text-4xl font-extrabold tracking-tight text-ink">{price}</span>
         <span className="pb-1 text-sm text-ink-muted">{period}</span>
       </div>
+      <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+        <Icons.gift className="h-3.5 w-3.5" /> Первые 14 дней — бесплатно
+      </p>
 
       <ul className="mt-6 space-y-3">
         {features.map((f) => (

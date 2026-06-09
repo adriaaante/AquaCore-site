@@ -77,4 +77,30 @@
   .lead {
     @apply text-lg leading-relaxed text-ink-muted;
   }
+
+  /* Типографика юридических страниц (политика, оферта, согласие). */
+  .legal {
+    @apply text-[15px] leading-relaxed text-ink-soft;
+  }
+  .legal h2 {
+    @apply mt-10 text-xl font-bold text-ink sm:text-2xl;
+  }
+  .legal h3 {
+    @apply mt-7 text-base font-bold text-ink;
+  }
+  .legal p {
+    @apply mt-3;
+  }
+  .legal ul {
+    @apply mt-3 list-disc space-y-1.5 pl-6;
+  }
+  .legal ol {
+    @apply mt-3 list-decimal space-y-1.5 pl-6;
+  }
+  .legal a {
+    @apply font-medium text-brand-600 hover:underline;
+  }
+  .legal strong {
+    @apply font-semibold text-ink;
+  }
 }

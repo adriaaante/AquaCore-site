@@ -102,6 +102,22 @@ export function LeadForm() {
       {/* honeypot от спама */}
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
+      <label className="flex items-start gap-2.5 text-xs leading-relaxed text-ink-muted">
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-brand-600 focus:ring-brand-400"
+        />
+        <span>
+          Я согласен(а) на обработку персональных данных и принимаю{" "}
+          <a href="/privacy/" className="text-brand-600 underline hover:no-underline">
+            Политику конфиденциальности
+          </a>
+          .
+        </span>
+      </label>
+
       <button type="submit" className="btn-primary" disabled={status === "sending"}>
         {status === "sending" ? "Отправляем..." : "Получить демонстрацию"}
         <Icons.arrow className="h-4 w-4" />
@@ -116,9 +132,6 @@ export function LeadForm() {
           .
         </p>
       )}
-      <p className="text-xs text-ink-muted">
-        Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
-      </p>
     </form>
   );
 }

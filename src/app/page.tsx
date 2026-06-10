@@ -27,6 +27,7 @@ export default function HomePage() {
         <KeyFeatures />
         <Anpr />
         <Loyalty />
+        <Quality />
         <Benefits />
         <Roi />
         <Analytics />
@@ -532,6 +533,41 @@ function Roles() {
   );
 }
 
+/* ─────────────────────────── QUALITY ──────────────────────────── */
+function Quality() {
+  const items = [
+    { icon: "star" as const, t: "Оценки после визита", d: "Клиент ставит оценку и пишет отзыв в своём кабинете — обратная связь приходит сама." },
+    { icon: "users" as const, t: "Рейтинг исполнителей", d: "Средний балл и отзывы по каждому сотруднику. Видно, кто моет лучше всех — и кого подтянуть." },
+    { icon: "doc" as const, t: "Жалобы с решением", d: "«Новая → В работе → Решена», заметка решения обязательна и видна клиенту. Ни одна жалоба не потеряется." },
+    { icon: "bell" as const, t: "SMS-чек с бонусами", d: "После оплаты клиент получает SMS: сумма, начисленные бонусы и баланс. Лояльность работает сама." },
+  ];
+  return (
+    <section id="kachestvo" className="section bg-slate-50">
+      <div className="container-x">
+        <SectionHeading
+          eyebrow="Качество сервиса"
+          title="Недовольный клиент уходит молча. Здесь — нет"
+          text="Оценки, отзывы, жалобы и рейтинг исполнителей — вы узнаёте о проблеме первым и возвращаете клиента, пока он не ушёл к конкуренту."
+        />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((it, i) => {
+            const Icon = Icons[it.icon];
+            return (
+              <FeatureCard
+                key={it.t}
+                index={i}
+                icon={<Icon className="h-6 w-6" />}
+                title={it.t}
+                text={it.d}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────────────────── SECURITY ─────────────────────────── */
 function Security() {
   const items = [
@@ -539,16 +575,18 @@ function Security() {
     { icon: "bolt" as const, t: "Детектор злоупотреблений", d: "15+ признаков: крупные скидки, расхождения по кассе, возвраты, оплаты без исполнителя." },
     { icon: "cash" as const, t: "Сверка кассы", d: "Система знает ожидаемый остаток. Любое расхождение — на виду, с комментарием." },
     { icon: "lock" as const, t: "Защита данных", d: "«Мягкое» удаление с восстановлением 30 дней и изоляция данных каждой мойки." },
+    { icon: "check" as const, t: "Деньги не задвоятся", d: "Оплаты и возвраты — атомарные операции: двойное нажатие «Оплатить» не создаст второй платёж." },
+    { icon: "refresh" as const, t: "Бэкапы и автотесты", d: "Ежедневные резервные копии базы и десятки автотестов на каждое обновление системы." },
   ];
   return (
     <section className="section">
       <div className="container-x">
         <SectionHeading
-          eyebrow="Контроль"
+          eyebrow="Контроль и надёжность"
           title="Прозрачность, которая защищает вашу прибыль"
-          text="AquaCore не просто учитывает — он помогает находить и устранять потери."
+          text="AquaCore не просто учитывает — он помогает находить и устранять потери. А деньги и данные защищены на уровне банковских систем."
         />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((it, i) => {
             const Icon = Icons[it.icon];
             return (
@@ -570,8 +608,8 @@ function Security() {
 /* ───────────────────────── INTEGRATIONS ───────────────────────── */
 function Integrations() {
   const items = [
-    { icon: "bell" as const, t: "SMS клиентам", d: "«Машина готова» и чек после оплаты — через SMS Aero или SMS.ru." },
-    { icon: "telegram" as const, t: "Telegram руководителю", d: "Алерты о низких оценках и расхождениях по кассе прямо в мессенджер." },
+    { icon: "bell" as const, t: "SMS клиентам", d: "«Машина готова» и SMS-чек с бонусами после оплаты — через SMS Aero или SMS.ru." },
+    { icon: "telegram" as const, t: "Telegram руководителю", d: "Алерты о жалобах, низких оценках и расхождениях по кассе прямо в мессенджер." },
     { icon: "scan" as const, t: "Распознавание номеров", d: "Своё решение распознавания без привязки к одному поставщику." },
     { icon: "mail" as const, t: "Email", d: "Подтверждение почты и восстановление доступа для сотрудников." },
   ];

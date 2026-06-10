@@ -101,9 +101,11 @@ export function Footer() {
           <div className="space-y-0.5">
             <p>{site.legal.orgName}</p>
             <p>
-              ИНН {site.legal.inn} · ОГРНИП {site.legal.ogrnip}
+              ИНН {site.legal.inn} · ОГРНИП {site.legal.ogrnip} ·{" "}
+              <Link href="/oferta/" className="hover:text-brand-600 hover:underline">
+                полные реквизиты
+              </Link>
             </p>
-            <p>{site.legal.address}</p>
           </div>
           <p className="lg:text-right">
             © {year} {site.name}. Все права защищены.

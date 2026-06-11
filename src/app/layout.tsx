@@ -1,10 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Manrope } from "next/font/google";
 import { site } from "@/config/site";
 import { CookieNotice } from "@/components/CookieNotice";
 import { OrganizationJsonLd, SoftwareAppJsonLd } from "@/components/JsonLd";
 import "./globals.css";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+// Фирменный шрифт с кириллицей. next/font скачивает файлы при сборке и
+// раздаёт их с нашего же домена — без запросов к Google в рантайме.
+// Он же определяет переменную --font-sans, на которую ссылается Tailwind.
+const fontSans = Manrope({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -59,7 +70,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" className={fontSans.variable}>
       <body>
         <OrganizationJsonLd />
         <SoftwareAppJsonLd />

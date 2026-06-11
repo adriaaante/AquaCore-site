@@ -104,7 +104,8 @@ export default function TarifyPage() {
               title="Что входит в каждый тариф"
             />
             <Reveal className="mt-12 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
-              <table className="w-full text-left text-sm">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50">
                     <th className="px-5 py-4 font-bold text-ink">Возможность</th>
@@ -135,6 +136,7 @@ export default function TarifyPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </Reveal>
             <p className="mt-6 text-center text-sm text-ink-muted">
               Не уверены, какой тариф выбрать?{" "}

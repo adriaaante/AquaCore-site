@@ -24,13 +24,13 @@ export function ShotFrame({
 }) {
   return (
     <figure
-      className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-brand ${className}`}
+      className={`w-full max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-brand ${className}`}
     >
       <figcaption className="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5">
         <span className="h-3 w-3 rounded-full bg-rose-400" />
         <span className="h-3 w-3 rounded-full bg-amber-400" />
         <span className="h-3 w-3 rounded-full bg-emerald-400" />
-        <span className="ml-2 truncate text-xs font-medium text-ink-muted">{label}</span>
+        <span className="ml-2 min-w-0 truncate text-xs font-medium text-ink-muted">{label}</span>
         <span className="ml-auto inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700">
           <Icons.check className="h-3 w-3" /> live
         </span>

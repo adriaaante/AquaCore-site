@@ -52,7 +52,7 @@ function Hero() {
   return (
     <section className="relative bg-hero-radial pt-[72px]">
       <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
-        <Reveal>
+        <Reveal className="min-w-0">
           <span className="eyebrow">
             <Icons.sparkles className="h-3.5 w-3.5" /> Программа для автомойки и шиномонтажа
           </span>
@@ -89,8 +89,8 @@ function Hero() {
           </div>
         </Reveal>
 
-        <Reveal delay={120} className="relative">
-          <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-brand-gradient opacity-10 blur-2xl" />
+        <Reveal delay={120} className="relative min-w-0">
+          <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-brand-gradient opacity-10 blur-2xl sm:-inset-6" />
           <VideoFrame
             file="hero-loop.mp4"
             poster="hero-poster.jpg"
@@ -241,7 +241,7 @@ function ThemePanel({ dark }: { dark: boolean }) {
 function Themes() {
   return (
     <section className="section">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="eyebrow">
             <Icons.sparkles className="h-3.5 w-3.5" /> Внешний вид
@@ -316,7 +316,7 @@ function KeyFeatures() {
 function Anpr() {
   return (
     <section className="section bg-ink text-white">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-200">
             <Icons.scan className="h-3.5 w-3.5" /> Распознавание номеров
@@ -380,7 +380,7 @@ function Anpr() {
 function Loyalty() {
   return (
     <section className="section">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal className="order-2 lg:order-1">
           <div className="relative mx-auto w-full max-w-[300px]">
             <div className="overflow-hidden rounded-[2.2rem] border-[7px] border-slate-900 bg-slate-900 shadow-brand">
@@ -428,7 +428,7 @@ function Loyalty() {
 function ClientLink() {
   return (
     <section className="section">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="eyebrow">
             <Icons.link className="h-3.5 w-3.5" /> Клиентам — проще простого
@@ -523,7 +523,7 @@ function Roi() {
 function Analytics() {
   return (
     <section className="section">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="eyebrow">
             <Icons.chart className="h-3.5 w-3.5" /> Отчётность

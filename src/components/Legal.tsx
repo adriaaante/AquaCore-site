@@ -3,7 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Icons } from "./Icons";
 
-/** Обёртка для юридических страниц (политика, оферта, согласие). */
+/** Обёртка для юридических страниц (политика, правовая информация, согласие). */
 export function LegalLayout({
   title,
   updated,

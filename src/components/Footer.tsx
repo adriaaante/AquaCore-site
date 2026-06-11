@@ -88,8 +88,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/oferta/" className="hover:text-brand-600">
-                Публичная оферта
+              <Link href="/usloviya/" className="hover:text-brand-600">
+                Правовая информация
               </Link>
             </li>
             <li>
@@ -107,13 +107,16 @@ export function Footer() {
             <p>{site.legal.orgName}</p>
             <p>
               ИНН {site.legal.inn} · ОГРНИП {site.legal.ogrnip} ·{" "}
-              <Link href="/oferta/" className="hover:text-brand-600 hover:underline">
+              <Link href="/usloviya/" className="hover:text-brand-600 hover:underline">
                 полные реквизиты
               </Link>
             </p>
           </div>
           <p className="lg:text-right">
             © {year} {site.name}. Все права защищены.
+            <span className="block">
+              Информация на сайте не является публичной офертой (ст. 437 ГК РФ).
+            </span>
           </p>
         </div>
       </div>

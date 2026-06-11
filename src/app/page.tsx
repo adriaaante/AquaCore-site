@@ -94,7 +94,7 @@ function Hero() {
           <VideoFrame
             file="hero-loop.mp4"
             poster="hero-poster.jpg"
-            label="AquaCore · Единая система: доска, скан номера, лояльность, касса, зарплата, аналитика"
+            label="AquaCore · Ваша мойка на полном ходу — и доход растёт"
           />
         </Reveal>
       </div>

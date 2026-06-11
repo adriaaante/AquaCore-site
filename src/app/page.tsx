@@ -94,7 +94,7 @@ function Hero() {
           <VideoFrame
             file="hero-loop.mp4"
             poster="hero-poster.jpg"
-            label="AquaCore · Бизнес растёт: аналитика, тёмная тема, зарплата"
+            label="AquaCore · Единая система: доска, скан номера, лояльность, касса, зарплата, аналитика"
           />
         </Reveal>
       </div>
@@ -191,6 +191,7 @@ function ProductShots() {
             file="story.mp4"
             poster="story-poster.jpg"
             label="AquaCore · Один визит: от заезда до 5 звёзд и бонусов"
+            loop={false}
           />
         </Reveal>
         <div className="mt-12">
@@ -550,10 +551,10 @@ function Analytics() {
           </ul>
         </Reveal>
         <Reveal delay={120}>
-          <ShotFrame
-            file="manager-analytics-30d.jpg"
-            alt="Аналитика AquaCore за 30 дней: выручка, ФОТ, маржа, топ услуг и клиентов"
-            label="AquaCore · Аналитика за 30 дней"
+          <VideoFrame
+            file="analytics-loop.mp4"
+            poster="analytics-poster.jpg"
+            label="AquaCore · Кабинет управляющего — живой обзор"
           />
         </Reveal>
       </div>

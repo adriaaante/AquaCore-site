@@ -10,10 +10,13 @@ import { useEffect, useRef } from "react";
 export function AutoRestartVideo({
   className,
   poster,
+  loop = true,
   children,
 }: {
   className?: string;
   poster?: string;
+  /** false — ролик доигрывает до конца и останавливается на последнем кадре */
+  loop?: boolean;
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -44,7 +47,7 @@ export function AutoRestartVideo({
       ref={ref}
       className={className}
       muted
-      loop
+      loop={loop}
       playsInline
       preload="metadata"
       poster={poster}

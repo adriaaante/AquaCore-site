@@ -14,8 +14,11 @@ export function VideoFrame({
   poster,
   label = "AquaCore в работе",
   aspect = "aspect-video",
+  loop = true,
   className = "",
 }: {
+  /** false — ролик заканчивается на последнем кадре (перезапуск при возврате на экран) */
+  loop?: boolean;
   /** Имя mp4-файла в public/videos (рядом ожидается одноимённый .webm) */
   file: string;
   /** Имя файла постера в public/videos */
@@ -42,6 +45,7 @@ export function VideoFrame({
         <AutoRestartVideo
           className="h-full w-full object-cover object-top"
           poster={`${base}/videos/${poster}`}
+          loop={loop}
         >
           <source
             src={`${base}/videos/${file.replace(/\.mp4$/, ".webm")}`}

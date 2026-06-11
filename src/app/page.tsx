@@ -93,7 +93,7 @@ function Hero() {
           <VideoFrame
             file="hero-loop.mp4"
             poster="hero-poster.jpg"
-            label="AquaCore · Дашборд управляющего — прибыль растёт"
+            label="AquaCore · Бизнес растёт: аналитика, тёмная тема, зарплата"
           />
         </Reveal>
       </div>
@@ -189,7 +189,7 @@ function ProductShots() {
           <VideoFrame
             file="story.mp4"
             poster="story-poster.jpg"
-            label="AquaCore · Заезд → скан номера → визит → выручка растёт"
+            label="AquaCore · Один визит: заезд → скан → мойка → 5 звёзд"
           />
         </Reveal>
         <div className="mt-12">

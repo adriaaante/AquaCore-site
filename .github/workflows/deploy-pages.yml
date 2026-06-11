@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: pages
@@ -48,5 +49,27 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Если в настройках Pages источник всё ещё «Deploy from a branch»,
+      # GitHub параллельно собирает README Джекиллом и его деплой может
+      # перетереть наш. Ждём завершения той сборки, чтобы наш деплой лёг
+      # последним. Когда источник переключат на «GitHub Actions», этот шаг
+      # просто не найдёт легаси-сборку и сразу продолжит.
+      - name: Wait for legacy branch build to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 30); do
+            status=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=20" \
+              | jq -r '[.workflow_runs[] | select(.name=="pages build and deployment")] | first | .status // "none"')
+            echo "legacy build: $status (attempt $i)"
+            if [ "$status" = "completed" ]; then break; fi
+            if [ "$status" = "none" ] && [ "$i" -ge 6 ]; then
+              echo "легаси-сборка не появилась — источник Pages уже GitHub Actions"
+              break
+            fi
+            sleep 10
+          done
+
       - id: deployment
         uses: actions/deploy-pages@v4

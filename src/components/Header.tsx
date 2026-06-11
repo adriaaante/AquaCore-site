@@ -42,7 +42,7 @@ export function Header() {
       }`}
     >
       <div className="container-x flex h-[72px] items-center justify-between">
-        <Link href="/" aria-label="AquaCore — на главную">
+        <Link href="/">
           <Logo />
         </Link>
 

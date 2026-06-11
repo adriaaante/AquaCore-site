@@ -129,7 +129,11 @@ export function LeadForm() {
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-brand-600 focus:ring-brand-400"
         />
         <span>
-          Я согласен(а) на обработку персональных данных и принимаю{" "}
+          Отправляя форму, я даю{" "}
+          <a href="/soglasie/" className="text-brand-600 underline hover:no-underline">
+            согласие на обработку персональных данных
+          </a>{" "}
+          и принимаю{" "}
           <a href="/privacy/" className="text-brand-600 underline hover:no-underline">
             Политику конфиденциальности
           </a>

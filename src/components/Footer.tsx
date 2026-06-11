@@ -92,6 +92,11 @@ export function Footer() {
                 Публичная оферта
               </Link>
             </li>
+            <li>
+              <Link href="/soglasie/" className="hover:text-brand-600">
+                Согласие на обработку данных
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

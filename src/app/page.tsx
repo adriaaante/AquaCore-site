@@ -81,7 +81,7 @@ function Hero() {
               <Icons.check className="h-4 w-4 text-brand-500" /> от 50 000 ₽ в год
             </span>
             <span className="inline-flex items-center gap-2">
-              <Icons.check className="h-4 w-4 text-brand-500" /> запуск за день
+              <Icons.check className="h-4 w-4 text-brand-500" /> запуск за 15 минут
             </span>
             <span className="inline-flex items-center gap-2">
               <Icons.check className="h-4 w-4 text-brand-500" /> на русском языке
@@ -184,7 +184,7 @@ function ProductShots() {
         <SectionHeading
           eyebrow="Как это выглядит"
           title="Реальные экраны системы, а не картинки"
-          text="Сначала — короткий ролик о том, как AquaCore зарабатывает для мойки. Ниже — скриншоты работающего приложения: нажмите на любой, чтобы рассмотреть детально."
+          text="Скриншоты работающего приложения AquaCore — нажмите на любой, чтобы рассмотреть детально."
         />
         <Reveal className="mx-auto mt-12 max-w-4xl">
           <VideoFrame
@@ -722,7 +722,7 @@ function Pricing() {
         </div>
         <p className="mt-6 text-center text-sm text-ink-muted">
           Нужна помощь с выбором?{" "}
-          <Link href="/tarify/" className="font-semibold text-brand-600 hover:underline">
+          <Link href="/tarify/" className="font-semibold text-brand-700 hover:underline">
             Сравнить тарифы подробно
           </Link>
         </p>

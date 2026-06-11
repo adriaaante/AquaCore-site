@@ -21,6 +21,11 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://aqua-core.ru/soglasie/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://aqua-core.ru/oferta/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

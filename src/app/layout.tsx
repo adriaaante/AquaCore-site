@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "@/config/site";
+import { CookieNotice } from "@/components/CookieNotice";
 import { OrganizationJsonLd, SoftwareAppJsonLd } from "@/components/JsonLd";
 import "./globals.css";
 
@@ -63,6 +64,7 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <SoftwareAppJsonLd />
         {children}
+        <CookieNotice />
       </body>
     </html>
   );

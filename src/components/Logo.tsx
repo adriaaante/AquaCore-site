@@ -17,7 +17,7 @@ export function Logo({ className = "" }: { className?: string }) {
       </span>
       <span className="flex flex-col leading-none">
         <span className="text-lg font-extrabold tracking-tight text-ink">
-          Aqua<span className="text-brand-600">Core</span>
+          Aqua<span className="text-brand-700">Core</span>
         </span>
         <span className="text-[10px] font-medium uppercase tracking-wider text-ink-muted">
           {site.tagline}

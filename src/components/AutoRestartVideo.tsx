@@ -49,7 +49,7 @@ export function AutoRestartVideo({
       muted
       loop={loop}
       playsInline
-      preload="metadata"
+      preload="none"
       poster={poster}
     >
       {children}

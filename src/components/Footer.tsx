@@ -64,6 +64,15 @@ export function Footer() {
                 {site.contacts.phone}
               </a>
             </li>
+            <li>
+              <a
+                href={site.contacts.telegramHref}
+                className="inline-flex items-center gap-2 hover:text-brand-600"
+              >
+                <Icons.telegram className="h-4 w-4 text-brand-500" />
+                Telegram
+              </a>
+            </li>
           </ul>
           <Link href="/#zayavka" className="btn-primary mt-5">
             Оставить заявку

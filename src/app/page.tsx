@@ -7,6 +7,7 @@ import { Icons } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading, FeatureCard } from "@/components/Section";
 import { ShotFrame } from "@/components/ShotFrame";
+import { VideoFrame } from "@/components/VideoFrame";
 import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 import { FaqJsonLd } from "@/components/JsonLd";
@@ -89,11 +90,10 @@ function Hero() {
 
         <Reveal delay={120} className="relative">
           <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-brand-gradient opacity-10 blur-2xl" />
-          <ShotFrame
-            file="manager-dashboard.jpg"
-            alt="Дашборд управляющего AquaCore: выручка, средний чек, визиты, график"
-            label="AquaCore · Дашборд управляющего"
-            crop
+          <VideoFrame
+            file="hero-loop.mp4"
+            poster="hero-poster.jpg"
+            label="AquaCore · Дашборд управляющего — прибыль растёт"
           />
         </Reveal>
       </div>
@@ -183,8 +183,15 @@ function ProductShots() {
         <SectionHeading
           eyebrow="Как это выглядит"
           title="Реальные экраны системы, а не картинки"
-          text="Это скриншоты работающего приложения AquaCore. Нажмите на любой, чтобы рассмотреть детально."
+          text="Сначала — короткий ролик о том, как AquaCore зарабатывает для мойки. Ниже — скриншоты работающего приложения: нажмите на любой, чтобы рассмотреть детально."
         />
+        <Reveal className="mx-auto mt-12 max-w-4xl">
+          <VideoFrame
+            file="story.mp4"
+            poster="story-poster.jpg"
+            label="AquaCore · От заезда машины до роста прибыли — за 12 секунд"
+          />
+        </Reveal>
         <div className="mt-12">
           <Screenshots />
         </div>
@@ -785,6 +792,15 @@ function CtaForm() {
                   <Icons.phone className="h-5 w-5" />
                 </span>
                 {site.contacts.phone}
+              </a>
+              <a
+                href={site.contacts.telegramHref}
+                className="flex items-center gap-3 text-ink-soft hover:text-brand-600"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
+                  <Icons.telegram className="h-5 w-5" />
+                </span>
+                Telegram
               </a>
             </div>
           </Reveal>

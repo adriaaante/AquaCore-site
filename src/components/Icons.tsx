@@ -174,6 +174,12 @@ export const Icons = {
       <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
     </Base>
   ),
+  telegram: (p: IconProps) => (
+    <Base {...p}>
+      <path d="M21 4L3 11l5 2 2 6 3-4 4 3 4-14Z" />
+      <path d="M8 13l9-6-6 7" />
+    </Base>
+  ),
 };
 
 export type IconName = keyof typeof Icons;

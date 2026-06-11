@@ -189,7 +189,7 @@ function ProductShots() {
           <VideoFrame
             file="story.mp4"
             poster="story-poster.jpg"
-            label="AquaCore · Скан номера → визит создан → выручка растёт"
+            label="AquaCore · Заезд → скан номера → визит → выручка растёт"
           />
         </Reveal>
         <div className="mt-12">

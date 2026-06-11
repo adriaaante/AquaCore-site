@@ -15,16 +15,10 @@ export const site = {
     "AquaCore — программа для автомойки и шиномонтажа: доска заказов в реальном времени, распознавание госномеров, лояльность, контроль кассы и качества (оценки, жалобы, рейтинг исполнителей), зарплата, аналитика. Первые 14 дней бесплатно. Базовый тариф — 50 000 ₽ в год.",
 
   // ───────────────────────── КОНТАКТЫ ─────────────────────────
-  // Почта компании. Остальное (телефон/Telegram/WhatsApp) — ЗАГЛУШКИ, замените на свои.
   contacts: {
     email: "info@aqua-core.ru",
     phone: "+7 966 127-77-67",
     phoneHref: "tel:+79661277767",
-    // TODO: ник в Telegram без @ (например "aquacore_sales")
-    telegram: "your_telegram",
-    telegramHref: "https://t.me/your_telegram",
-    // TODO: номер WhatsApp (только цифры, например 70000000000)
-    whatsappHref: "https://wa.me/70000000000",
     // TODO: ссылка на живое демо/стенд, если есть
     demoHref: "#zayavka",
     city: "Россия",
@@ -39,15 +33,11 @@ export const site = {
   web3formsAccessKey: "REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY",
 
   // ─────────────────────── ИЗОБРАЖЕНИЯ ────────────────────────
-  // Фотографии сгенерированы AI и пока размещены на внешнем CDN.
-  // Чтобы сделать их локальными (надёжнее для своего хостинга):
-  //   1) запустите ./download-images.sh — он скачает файлы в public/images/
-  //   2) замените значения ниже на "/images/hero.jpg", "/images/anpr.jpg", "/images/client.jpg"
+  // Фотографии сгенерированы AI и лежат локально в public/images/.
   images: {
-    hero: "https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260607_080210_642eae28-0c25-4473-84c2-342f8bb57cc6.png",
-    anpr: "https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260607_080212_b3ac1707-4ae4-4364-aa96-8cdb0abf5561.png",
-    client:
-      "https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260607_080213_43184d8b-6011-47d8-b723-461ee44468f8.png",
+    hero: "/images/hero.jpg",
+    anpr: "/images/anpr.jpg",
+    client: "/images/client.jpg",
   },
 
   // ─────────────────────────── ЦЕНЫ ───────────────────────────

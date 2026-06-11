@@ -168,10 +168,10 @@ export const Icons = {
       <path d="M4 7l8 6 8-6" />
     </Base>
   ),
-  telegram: (p: IconProps) => (
+  link: (p: IconProps) => (
     <Base {...p}>
-      <path d="M21 4L3 11l5 2 2 6 3-4 4 3 4-14Z" />
-      <path d="M8 13l9-6-6 7" />
+      <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
+      <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
     </Base>
   ),
 };

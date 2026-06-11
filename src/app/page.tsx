@@ -27,6 +27,7 @@ export default function HomePage() {
         <KeyFeatures />
         <Anpr />
         <Loyalty />
+        <ClientLink />
         <Quality />
         <Benefits />
         <Roi />
@@ -337,7 +338,7 @@ function Anpr() {
         </Reveal>
         <Reveal delay={120} className="relative">
           <img
-            src={site.images.anpr}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${site.images.anpr}`}
             alt="Распознавание госномера на въезде на мойку"
             loading="lazy"
             className="w-full rounded-2xl border border-white/10 object-cover shadow-brand"
@@ -395,6 +396,49 @@ function Loyalty() {
               </div>
             ))}
           </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────── CLIENT LINK ──────────────────────────── */
+function ClientLink() {
+  return (
+    <section className="section">
+      <div className="container-x grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <span className="eyebrow">
+            <Icons.link className="h-3.5 w-3.5" /> Клиентам — проще простого
+          </span>
+          <h2 className="mt-5 h-title">Одна ссылка — и клиент привязан к вашей мойке</h2>
+          <p className="lead mt-4">
+            У каждой мойки в AquaCore есть постоянная короткая ссылка. Отправьте её
+            сообщением или повесьте QR-кодом на кассе — клиент попадает сразу в кабинет
+            вашей мойки: история визитов, бонусы и онлайн-запись.
+          </p>
+          <ul className="mt-6 space-y-3">
+            {[
+              "Вход по номеру телефона и SMS-коду — без приложений и паролей",
+              "Ссылка постоянная и безопасная: без телефона по ней не войти",
+              "QR-код на кассе превращает разовых посетителей в постоянных",
+              "Модули «Клиентский кабинет» и «SMS» включаются одной галочкой",
+            ].map((t) => (
+              <li key={t} className="flex items-start gap-3 text-ink-soft">
+                <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-brand-50 text-brand-600">
+                  <Icons.check className="h-3.5 w-3.5" />
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal delay={120}>
+          <ShotFrame
+            file="manager-client-link.jpg"
+            alt="Настройки AquaCore: постоянная ссылка для клиентов и дополнительные модули"
+            label="AquaCore · Ссылка для клиентов и модули"
+          />
         </Reveal>
       </div>
     </section>
@@ -539,7 +583,7 @@ function Quality() {
     { icon: "star" as const, t: "Оценки после визита", d: "Клиент ставит оценку и пишет отзыв в своём кабинете — обратная связь приходит сама." },
     { icon: "users" as const, t: "Рейтинг исполнителей", d: "Средний балл и отзывы по каждому сотруднику. Видно, кто моет лучше всех — и кого подтянуть." },
     { icon: "doc" as const, t: "Жалобы с решением", d: "«Новая → В работе → Решена», заметка решения обязательна и видна клиенту. Ни одна жалоба не потеряется." },
-    { icon: "bell" as const, t: "SMS-чек с бонусами", d: "После оплаты клиент получает SMS: сумма, начисленные бонусы и баланс. Лояльность работает сама." },
+    { icon: "bell" as const, t: "SMS-чек с бонусами", d: "После оплаты клиент получает SMS: сумма, начисленные бонусы и срок их действия. Лояльность работает сама." },
   ];
   return (
     <section id="kachestvo" className="section bg-slate-50">
@@ -608,8 +652,8 @@ function Security() {
 /* ───────────────────────── INTEGRATIONS ───────────────────────── */
 function Integrations() {
   const items = [
-    { icon: "bell" as const, t: "SMS клиентам", d: "«Машина готова» и SMS-чек с бонусами после оплаты — через SMS Aero или SMS.ru." },
-    { icon: "telegram" as const, t: "Telegram руководителю", d: "Алерты о жалобах, низких оценках и расхождениях по кассе прямо в мессенджер." },
+    { icon: "bell" as const, t: "SMS клиентам", d: "«Машина готова» и SMS-чек после оплаты: сумма, бонусы и срок их действия — через SMS Aero или SMS.ru." },
+    { icon: "link" as const, t: "Ссылка и QR для клиентов", d: "Постоянная ссылка вашей мойки ведёт клиента сразу в его кабинет — повесьте QR-код на кассе." },
     { icon: "scan" as const, t: "Распознавание номеров", d: "Своё решение распознавания без привязки к одному поставщику." },
     { icon: "mail" as const, t: "Email", d: "Подтверждение почты и восстановление доступа для сотрудников." },
   ];
@@ -741,15 +785,6 @@ function CtaForm() {
                   <Icons.phone className="h-5 w-5" />
                 </span>
                 {site.contacts.phone}
-              </a>
-              <a
-                href={site.contacts.telegramHref}
-                className="flex items-center gap-3 text-ink-soft hover:text-brand-600"
-              >
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                  <Icons.telegram className="h-5 w-5" />
-                </span>
-                Telegram
               </a>
             </div>
           </Reveal>

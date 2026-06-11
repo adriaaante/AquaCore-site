@@ -1,71 +1,54 @@
 #!/usr/bin/env bash
-###############################################################################
-#  AquaCore-site — деплой на reg.ru (или любой хостинг с SSH и Node.js)
 #
-#  ЧТО ДЕЛАЕТ:
-#    1) забирает свежий код из ветки на GitHub
-#    2) ставит зависимости и собирает статический сайт (папка out/)
-#    3) копирует готовые файлы в каталог сайта (WEB_ROOT)
+# ── Деплой сайта AquaCore на хостинг reg.ru ──────────────────────────────
 #
-#  КАК ПОЛЬЗОВАТЬСЯ (один раз):
-#    - зайдите в SSH-консоль reg.ru
-#    - склонируйте репозиторий, напр.:  git clone <URL> ~/aquacore-site
-#    - откройте этот файл и при необходимости поправьте переменные ниже
-#    - дайте права:  chmod +x deploy.sh
+# Сайт собирается автоматически на GitHub (workflow build-dist.yml) и
+# складывается в ветку `regru-dist` уже в виде готовых HTML/CSS/JS.
+# Этот скрипт запускается НА ХОСТИНГЕ reg.ru и просто забирает готовую
+# сборку — Node.js на хостинге не нужен.
 #
-#  КАЖДОЕ ОБНОВЛЕНИЕ:
-#    - просто выполните в консоли:   ./deploy.sh
-#    - сайт обновится автоматически
-###############################################################################
+# Первый запуск (по SSH на хостинге):
+#   curl -fsSL https://raw.githubusercontent.com/adriaaante/AquaCore-site/main/deploy.sh -o ~/aquacore-deploy.sh
+#   chmod +x ~/aquacore-deploy.sh
+#   ~/aquacore-deploy.sh
+#
+# Каждое обновление сайта — одна команда:
+#   ~/aquacore-deploy.sh
+#
+# Папку сайта можно переопределить на лету (если домен привязан к другому
+# каталогу):
+#   WEB_ROOT=~/www/другая-папка ~/aquacore-deploy.sh
+#
 set -euo pipefail
 
-# ─────────────────────────── НАСТРОЙКИ ───────────────────────────
-# Папка с проектом (где лежит этот скрипт). Обычно менять не нужно.
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_URL="https://github.com/adriaaante/AquaCore-site.git"
+BRANCH="regru-dist"
 
-# Ветка, из которой брать код.
-BRANCH="${BRANCH:-claude/inspiring-fermat-AWUMl}"
+# Служебная папка с копией сборки (не каталог сайта).
+DIST_DIR="${DIST_DIR:-$HOME/.aquacore-dist}"
 
-# Каталог, который отдаёт ваш сайт (корень домена на reg.ru).
-# Частые варианты: ~/public_html  или  ~/www/ВАШ-ДОМЕН/public_html
-WEB_ROOT="${WEB_ROOT:-$HOME/public_html}"
-# ──────────────────────────────────────────────────────────────────
+# Каталог сайта на хостинге. У reg.ru сайты обычно живут в ~/www/<домен>.
+# Отдельная папка — чтобы не мешать другим сайтам на этом же хостинге.
+WEB_ROOT="${WEB_ROOT:-$HOME/www/aqua-core.ru}"
 
-echo "==> Проект:   $REPO_DIR"
-echo "==> Ветка:    $BRANCH"
-echo "==> Сайт в:   $WEB_ROOT"
-echo ""
-
-cd "$REPO_DIR"
-
-echo "==> [1/4] Получаю свежий код из ветки $BRANCH ..."
-git fetch origin "$BRANCH"
-git reset --hard "origin/$BRANCH"
-
-echo "==> [2/4] Устанавливаю зависимости ..."
-if [ -f package-lock.json ]; then
-  npm ci
+echo "→ Забираю свежую сборку (ветка $BRANCH)..."
+if [ ! -d "$DIST_DIR/.git" ]; then
+  git clone --depth 1 --branch "$BRANCH" "$REPO_URL" "$DIST_DIR"
 else
-  npm install
+  git -C "$DIST_DIR" fetch --depth 1 origin "$BRANCH"
+  git -C "$DIST_DIR" reset --hard "origin/$BRANCH"
 fi
 
-echo "==> [3/4] Собираю статический сайт ..."
-npm run build   # next build с output:"export" создаёт папку out/
-
-if [ ! -d "$REPO_DIR/out" ]; then
-  echo "!! Папка out/ не создана. Сборка не удалась." >&2
-  exit 1
-fi
-
-echo "==> [4/4] Копирую файлы в $WEB_ROOT ..."
+echo "→ Копирую сайт в $WEB_ROOT ..."
 mkdir -p "$WEB_ROOT"
 if command -v rsync >/dev/null 2>&1; then
-  rsync -a --delete "$REPO_DIR/out/" "$WEB_ROOT/"
+  rsync -a --delete --exclude='.git' "$DIST_DIR"/ "$WEB_ROOT"/
 else
-  # Фолбэк без rsync: очистить и скопировать
-  find "$WEB_ROOT" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-  cp -r "$REPO_DIR/out/." "$WEB_ROOT/"
+  # На случай, если rsync на тарифе нет.
+  find "$WEB_ROOT" -mindepth 1 -maxdepth 1 ! -name '.well-known' -exec rm -rf {} +
+  cp -a "$DIST_DIR"/. "$WEB_ROOT"/
+  rm -rf "$WEB_ROOT/.git"
 fi
 
-echo ""
-echo "✅ Готово! Сайт обновлён: $WEB_ROOT"
+echo "✅ Готово: сайт обновлён в $WEB_ROOT"
+echo "   Версия сборки: $(git -C "$DIST_DIR" log -1 --format='%h · %ci')"

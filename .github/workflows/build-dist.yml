@@ -1,0 +1,42 @@
+name: Build dist for reg.ru
+
+# Собирает сайт БЕЗ basePath (для своего домена в корне) и публикует готовые
+# файлы в ветку `regru-dist`. Хостинг reg.ru забирает эту ветку скриптом
+# deploy.sh — Node.js на хостинге не нужен.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: regru-dist
+  cancel-in-progress: true
+
+jobs:
+  dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static site (корень домена, без basePath)
+        run: npm run build
+
+      - name: Publish to regru-dist branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: regru-dist
+          publish_dir: ./out
+          force_orphan: true
+          commit_message: "dist: ${{ github.sha }}"

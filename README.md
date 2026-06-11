@@ -44,34 +44,32 @@ npm run serve    # предпросмотр собранной статики
 
 ## 🚀 Деплой на reg.ru
 
-### Вариант А. Автоматически по SSH (рекомендуется)
-Если на вашем тарифе reg.ru есть SSH-доступ и Node.js:
+Сайт собирается автоматически на GitHub: каждый push в `main` обновляет
+ветку `regru-dist` с готовыми HTML/CSS/JS (workflow `build-dist.yml`).
+Node.js на хостинге не нужен.
+
+### Первый раз (SSH-консоль reg.ru)
 ```bash
-# один раз — склонировать проект на хостинг
-git clone <URL-репозитория> ~/aquacore-site
-cd ~/aquacore-site
-chmod +x deploy.sh
-
-# при необходимости укажите каталог сайта (корень домена)
-# по умолчанию ~/public_html
-nano deploy.sh   # поправьте WEB_ROOT, если нужно
-
-# каждое обновление сайта — одной командой:
-./deploy.sh
+curl -fsSL https://raw.githubusercontent.com/adriaaante/AquaCore-site/main/deploy.sh -o ~/aquacore-deploy.sh
+chmod +x ~/aquacore-deploy.sh
+~/aquacore-deploy.sh
 ```
-Скрипт сам забирает свежий код, собирает сайт и копирует файлы в каталог домена.
-Можно переопределить переменные на лету:
+Сайт ляжет в отдельную папку `~/www/aqua-core.ru` (не мешает другим сайтам
+на хостинге). Другой каталог: `WEB_ROOT=~/www/папка ~/aquacore-deploy.sh`.
+
+### Каждое обновление — одна команда
 ```bash
-WEB_ROOT=~/www/site/public_html ./deploy.sh
+~/aquacore-deploy.sh
 ```
 
-### Вариант Б. Вручную (если нет Node.js на хостинге)
-Соберите сайт на своём компьютере и залейте папку через файл-менеджер/FTP:
-```bash
-npm install
-npm run build
-# содержимое папки out/ загрузите в корень сайта на reg.ru (public_html)
-```
+### Привязка домена (панель reg.ru)
+1. Хостинг → панель управления (ISPmanager) → «WWW-домены» → «Создать»:
+   домен `aqua-core.ru`, корневая директория `www/aqua-core.ru`.
+2. Если домен зарегистрирован в reg.ru — в карточке домена включите
+   DNS-серверы хостинга (ns1/ns2.hosting.reg.ru) или пропишите A-запись
+   на IP хостинга (указан в письме об активации и в панели).
+3. В ISPmanager выпустите бесплатный SSL Let's Encrypt
+   («SSL-сертификаты» → Let's Encrypt) и включите редирект на HTTPS.
 
 ## Изображения
 Фотографии (герой, распознавание номеров, клиент) сгенерированы ИИ и лежат локально в

@@ -189,7 +189,7 @@ function ProductShots() {
           <VideoFrame
             file="story.mp4"
             poster="story-poster.jpg"
-            label="AquaCore · Один визит: заезд → скан → мойка → 5 звёзд"
+            label="AquaCore · Один визит: от заезда до 5 звёзд и бонусов"
           />
         </Reveal>
         <div className="mt-12">
@@ -370,8 +370,8 @@ function Anpr() {
           </video>
           <div className="absolute bottom-4 left-4 rounded-xl border border-white/15 bg-ink/80 px-4 py-3 backdrop-blur">
             <p className="text-[10px] uppercase tracking-wide text-slate-400">Распознан клиент</p>
-            <p className="font-mono text-lg font-bold">Н817ВМ 750</p>
-            <p className="text-xs text-brand-300">Алексей · 14 визитов · скидка 10%</p>
+            <p className="font-mono text-lg font-bold">К270ОК 97</p>
+            <p className="text-xs text-brand-300">Иван · 6 визитов · 71 ₽ бонусов</p>
           </div>
         </Reveal>
       </div>

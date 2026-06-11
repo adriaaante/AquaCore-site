@@ -7,6 +7,7 @@ import { Icons } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading, FeatureCard } from "@/components/Section";
 import { ShotFrame } from "@/components/ShotFrame";
+import { AutoRestartVideo } from "@/components/AutoRestartVideo";
 import { VideoFrame } from "@/components/VideoFrame";
 import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
@@ -345,13 +346,8 @@ function Anpr() {
           </ul>
         </Reveal>
         <Reveal delay={120} className="relative">
-          <video
+          <AutoRestartVideo
             className="w-full rounded-2xl border border-white/10 object-cover shadow-brand"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
             poster={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/anpr-poster.jpg`}
           >
             <source
@@ -367,7 +363,7 @@ function Anpr() {
               alt="Администратор сканирует госномер планшетом на въезде на мойку"
               loading="lazy"
             />
-          </video>
+          </AutoRestartVideo>
           <div className="absolute bottom-4 left-4 rounded-xl border border-white/15 bg-ink/80 px-4 py-3 backdrop-blur">
             <p className="text-[10px] uppercase tracking-wide text-slate-400">Распознан клиент</p>
             <p className="font-mono text-lg font-bold">К270ОК 97</p>

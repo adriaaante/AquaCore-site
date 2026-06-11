@@ -1,3 +1,4 @@
+import { AutoRestartVideo } from "./AutoRestartVideo";
 import { Icons } from "./Icons";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -38,13 +39,8 @@ export function VideoFrame({
         </span>
       </figcaption>
       <div className={`${aspect} w-full overflow-hidden`}>
-        <video
+        <AutoRestartVideo
           className="h-full w-full object-cover object-top"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
           poster={`${base}/videos/${poster}`}
         >
           <source
@@ -54,7 +50,7 @@ export function VideoFrame({
           <source src={`${base}/videos/${file}`} type="video/mp4" />
           {/* Фолбэк для браузеров без поддержки video */}
           <img src={`${base}/videos/${poster}`} alt={label} loading="lazy" />
-        </video>
+        </AutoRestartVideo>
       </div>
     </figure>
   );

@@ -189,7 +189,7 @@ function ProductShots() {
           <VideoFrame
             file="story.mp4"
             poster="story-poster.jpg"
-            label="AquaCore · От заезда машины до роста прибыли — за 12 секунд"
+            label="AquaCore · Скан номера → визит создан → выручка растёт"
           />
         </Reveal>
         <div className="mt-12">
@@ -323,15 +323,16 @@ function Anpr() {
             Узнаёт клиента ещё до того, как он вышел из машины
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-300">
-            Камера считывает госномер на въезде, а система сама находит зарегистрированного
-            клиента: подтягивает его автомобиль, историю визитов, баланс бонусов и положенную
-            скидку. Администратору остаётся подтвердить заказ.
+            Администратор просто фотографирует номер с планшета — или камера на въезде
+            делает это сама. Система мгновенно находит зарегистрированного клиента:
+            подтягивает его автомобиль, историю визитов, баланс бонусов и положенную
+            скидку. Остаётся подтвердить заказ.
           </p>
           <ul className="mt-6 space-y-3">
             {[
               "Авто-подстановка карточки клиента по номеру",
+              "Скан с планшета администратора или камера на въезде",
               "Поддержка ГОСТ-номеров и кириллицы",
-              "Меньше ручного ввода — быстрее приём машин",
               "Предупреждение о повторном визите за день",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3 text-slate-200">
@@ -344,16 +345,33 @@ function Anpr() {
           </ul>
         </Reveal>
         <Reveal delay={120} className="relative">
-          <img
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${site.images.anpr}`}
-            alt="Распознавание госномера на въезде на мойку"
-            loading="lazy"
+          <video
             className="w-full rounded-2xl border border-white/10 object-cover shadow-brand"
-          />
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/anpr-poster.jpg`}
+          >
+            <source
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/anpr-loop.webm`}
+              type="video/webm"
+            />
+            <source
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/anpr-loop.mp4`}
+              type="video/mp4"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/anpr-poster.jpg`}
+              alt="Администратор сканирует госномер планшетом на въезде на мойку"
+              loading="lazy"
+            />
+          </video>
           <div className="absolute bottom-4 left-4 rounded-xl border border-white/15 bg-ink/80 px-4 py-3 backdrop-blur">
             <p className="text-[10px] uppercase tracking-wide text-slate-400">Распознан клиент</p>
-            <p className="font-mono text-lg font-bold">А123ВС 777</p>
-            <p className="text-xs text-brand-300">Иван · 14 визитов · скидка 10%</p>
+            <p className="font-mono text-lg font-bold">Н817ВМ 750</p>
+            <p className="text-xs text-brand-300">Алексей · 14 визитов · скидка 10%</p>
           </div>
         </Reveal>
       </div>

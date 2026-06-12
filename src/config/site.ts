@@ -19,9 +19,8 @@ export const site = {
     email: "info@aqua-core.ru",
     phone: "+7 966 127-77-67",
     phoneHref: "tel:+79661277767",
-    // TODO: заменить на реальный ник в Telegram (без @), когда он появится.
-    telegram: "aquacore",
-    telegramHref: "https://t.me/aquacore",
+    telegram: "FutureFlowInc",
+    telegramHref: "https://t.me/FutureFlowInc",
     // TODO: ссылка на живое демо/стенд, если есть
     demoHref: "#zayavka",
     city: "Россия",

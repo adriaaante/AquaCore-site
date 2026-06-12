@@ -20,10 +20,11 @@ const fontSans = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — программа для автомойки и шиномонтажа №1 по соотношению цена/возможности`,
+    default: `${site.name} — программа для автомойки и шиномонтажа: полный функционал от 50 000 ₽ в год`,
     template: `%s — ${site.name}`,
   },
   description: site.description,
+  alternates: { canonical: "./" },
   keywords: [
     "программа для автомойки",
     "CRM для автомойки",

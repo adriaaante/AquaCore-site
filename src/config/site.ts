@@ -34,13 +34,6 @@ export const site = {
   // Пока ключ не вставлен — форма предложит написать на email напрямую.
   web3formsAccessKey: "REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY",
 
-  // ─────────────────────── ИЗОБРАЖЕНИЯ ────────────────────────
-  // Фотографии сгенерированы AI и лежат локально в public/images/.
-  images: {
-    hero: "/images/hero.jpg",
-    anpr: "/images/anpr.jpg",
-    client: "/images/client.jpg",
-  },
 
   // ─────────────────────────── ЦЕНЫ ───────────────────────────
   pricing: {

@@ -45,13 +45,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — система управления автомойкой и шиномонтажом`,
     description: site.description,
-    images: [{ url: site.images.hero, width: 1200, height: 675, alt: site.name }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${site.name} — программа для автомойки и шиномонтажа` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — система управления автомойкой и шиномонтажом`,
     description: site.description,
-    images: [site.images.hero],
+    images: ["/og.jpg"],
   },
   icons: {
     icon: [{ url: `${base}/icon.svg`, type: "image/svg+xml" }],

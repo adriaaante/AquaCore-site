@@ -5,21 +5,31 @@ export function Logo({ className = "" }: { className?: string }) {
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <span
         aria-hidden
-        className="grid h-9 w-9 place-items-center rounded-xl bg-brand-gradient shadow-brand"
+        className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl shadow-brand"
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-          <path
-            d="M12 3c-2.4 3.8-4.6 6.3-4.6 9.4a4.6 4.6 0 0 0 9.2 0C16.6 9.3 14.4 6.8 12 3Z"
-            fill="#fff"
-            fillOpacity="0.95"
-          />
-          <g transform="translate(12 12.4)" stroke="#0c4a6e" fill="none" strokeWidth="0.53">
-            <ellipse rx="4.03" ry="1.73" transform="rotate(35)" />
-            <ellipse rx="4.03" ry="1.73" transform="rotate(-35)" />
+        {/* Идентично public/icon.svg — единый знак во всех местах */}
+        <svg viewBox="0 0 512 512" className="h-9 w-9">
+          <defs>
+            <linearGradient id="aqlogo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#0369a1" />
+            </linearGradient>
+          </defs>
+          <rect width="512" height="512" fill="url(#aqlogo)" />
+          <g transform="translate(256 256) scale(1.3) translate(-256 -242)">
+            <path
+              d="M256 96 c -50 80 -96 132 -96 196 a 96 96 0 0 0 192 0 c 0 -64 -46 -116 -96 -196 z"
+              fill="#fff"
+              fillOpacity="0.95"
+            />
+            <g transform="translate(256 292)" stroke="#0c4a6e" fill="none" strokeWidth="11">
+              <ellipse rx="84" ry="36" transform="rotate(35)" />
+              <ellipse rx="84" ry="36" transform="rotate(-35)" />
+            </g>
+            <circle cx="256" cy="292" r="26" fill="#0c4a6e" />
+            <circle cx="320" cy="250" r="12" fill="#0c4a6e" />
+            <circle cx="192" cy="334" r="12" fill="#0c4a6e" />
           </g>
-          <circle cx="12" cy="12.4" r="1.25" fill="#0c4a6e" />
-          <circle cx="15.07" cy="10.39" r="0.58" fill="#0c4a6e" />
-          <circle cx="8.93" cy="14.41" r="0.58" fill="#0c4a6e" />
         </svg>
       </span>
       <span className="flex flex-col leading-none">

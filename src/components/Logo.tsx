@@ -13,13 +13,13 @@ export function Logo({ className = "" }: { className?: string }) {
             fill="#fff"
             fillOpacity="0.95"
           />
-          <g transform="translate(12 12.4)" stroke="#0c4a6e" fill="none" strokeWidth="0.38">
-            <ellipse rx="3.54" ry="1.44" transform="rotate(35)" />
-            <ellipse rx="3.54" ry="1.44" transform="rotate(-35)" />
+          <g transform="translate(12 12.4)" stroke="#0c4a6e" fill="none" strokeWidth="0.53">
+            <ellipse rx="4.03" ry="1.73" transform="rotate(35)" />
+            <ellipse rx="4.03" ry="1.73" transform="rotate(-35)" />
           </g>
-          <circle cx="12" cy="12.4" r="0.96" fill="#0c4a6e" />
-          <circle cx="14.88" cy="10.77" r="0.43" fill="#0c4a6e" />
-          <circle cx="9.12" cy="14.03" r="0.43" fill="#0c4a6e" />
+          <circle cx="12" cy="12.4" r="1.25" fill="#0c4a6e" />
+          <circle cx="15.07" cy="10.39" r="0.58" fill="#0c4a6e" />
+          <circle cx="8.93" cy="14.41" r="0.58" fill="#0c4a6e" />
         </svg>
       </span>
       <span className="flex flex-col leading-none">

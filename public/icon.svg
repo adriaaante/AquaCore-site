@@ -7,11 +7,11 @@
   </defs>
   <rect width="512" height="512" rx="96" fill="url(#g)"/>
   <path d="M256 96 c -50 80 -96 132 -96 196 a 96 96 0 0 0 192 0 c 0 -64 -46 -116 -96 -196 z" fill="#fff" opacity="0.95"/>
-  <g transform="translate(256 292)" stroke="#0c4a6e" fill="none" stroke-width="8">
-    <ellipse rx="74" ry="30" transform="rotate(35)"/>
-    <ellipse rx="74" ry="30" transform="rotate(-35)"/>
+  <g transform="translate(256 292)" stroke="#0c4a6e" fill="none" stroke-width="11">
+    <ellipse rx="84" ry="36" transform="rotate(35)"/>
+    <ellipse rx="84" ry="36" transform="rotate(-35)"/>
   </g>
-  <circle cx="256" cy="292" r="20" fill="#0c4a6e"/>
-  <circle cx="316" cy="258" r="9" fill="#0c4a6e"/>
-  <circle cx="196" cy="326" r="9" fill="#0c4a6e"/>
+  <circle cx="256" cy="292" r="26" fill="#0c4a6e"/>
+  <circle cx="320" cy="250" r="12" fill="#0c4a6e"/>
+  <circle cx="192" cy="334" r="12" fill="#0c4a6e"/>
 </svg>

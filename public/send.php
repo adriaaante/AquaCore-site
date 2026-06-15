@@ -29,7 +29,11 @@ $WEB3FORMS_KEY      = getenv('WEB3FORMS_KEY') ?: '';
 
 $secret = __DIR__ . '/telegram-secret.php';
 if (is_file($secret)) {
+    // Буферизуем на случай BOM/пробелов перед <?php в секрете,
+    // чтобы не было "headers already sent".
+    ob_start();
     require $secret; // может переопределить переменные выше
+    ob_end_clean();
 }
 
 // ── Антиспам (honeypot) ─────────────────────────────────────────────────

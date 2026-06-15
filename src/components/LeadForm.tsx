@@ -37,15 +37,16 @@ export function LeadForm() {
 
     setStatus("sending");
 
-    // 1) Telegram — через send.php на хостинге.
-    const telegram = fetch(FORM_ENDPOINT, { method: "POST", body: data })
+    // 1) send.php на хостинге отправляет заявку и в Telegram, и письмом на
+    //    почту (серверно через Resend — как в основном приложении AquaCore).
+    const server = fetch(FORM_ENDPOINT, { method: "POST", body: data })
       .then((r) => r.json())
-      .then((j) => !!j.success)
-      .catch(() => false);
+      .then((j) => ({ tg: !!j.telegram, email: !!j.email, ok: !!j.success }))
+      .catch(() => ({ tg: false, email: false, ok: false }));
 
-    // 2) Письмо — через web3forms прямо из браузера (бесплатный тариф разрешает
-    //    только client-side). Публичный ключ берём у send.php.
-    const email = (async () => {
+    // 2) Если серверная отправка письма не настроена (Resend не задан) —
+    //    запасной путь: web3forms прямо из браузера. Ключ берём у send.php.
+    async function sendViaWeb3forms() {
       try {
         const cfg = await fetch(FORM_ENDPOINT).then((r) => r.json());
         const key = cfg?.web3forms_key;
@@ -68,10 +69,11 @@ export function LeadForm() {
       } catch {
         return false;
       }
-    })();
+    }
 
-    const [tgOk, emailOk] = await Promise.all([telegram, email]);
-    if (tgOk || emailOk) {
+    const srv = await server;
+    const emailOk = srv.email || (await sendViaWeb3forms());
+    if (srv.tg || emailOk) {
       setStatus("ok");
       form.reset();
     } else {

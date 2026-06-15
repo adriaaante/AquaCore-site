@@ -14,10 +14,19 @@
 $TELEGRAM_BOT_TOKEN = 'ВСТАВЬТЕ_ТОКЕН_БОТА';   // напр. 1234567890:AA....
 $TELEGRAM_CHAT_ID   = '-5380504235';            // id вашей группы
 
-// Почта через бесплатный web3forms.com:
-//   1. Зайдите на https://web3forms.com, введите свой e-mail (info@aqua-core.ru)
-//   2. На почту придёт Access Key — вставьте его сюда. Письма будут приходить
-//      на этот e-mail. SMTP и пароли не нужны.
-$WEB3FORMS_KEY      = 'ВСТАВЬТЕ_КЛЮЧ_WEB3FORMS';
+// ── Почта через Resend (рекомендуется) ──────────────────────────────────
+// Тот же сервис, что и в основном приложении AquaCore. Письма с заявками
+// уходят серверно (надёжно, без SMTP и без зависимости от браузера).
+//   1. Зарегистрируйтесь на https://resend.com, создайте API-ключ.
+//   2. Вставьте ключ сюда. Письма будут приходить на адрес $MAIL_TO.
+//   3. EMAIL_FROM: пока домен не подтверждён в Resend, оставьте onboarding@resend.dev;
+//      после подтверждения домена — укажите свой, напр. 'AquaCore <info@aqua-core.ru>'.
+$RESEND_API_KEY     = '';                         // напр. re_xxxxxxxx
+$EMAIL_FROM         = 'AquaCore <onboarding@resend.dev>';
+$MAIL_TO            = 'info@aqua-core.ru';         // куда приходят заявки
 
-$MAIL_TO            = 'info@aqua-core.ru';        // запасной вариант (PHP mail)
+// ── Запасной вариант: бесплатный web3forms.com (отправка из браузера) ────
+// Используется, только если RESEND_API_KEY не задан.
+//   1. Зайдите на https://web3forms.com, введите свой e-mail (info@aqua-core.ru)
+//   2. На почту придёт Access Key — вставьте его сюда.
+$WEB3FORMS_KEY      = '';                          // ВСТАВЬТЕ_КЛЮЧ_WEB3FORMS

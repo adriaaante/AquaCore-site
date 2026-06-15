@@ -1,17 +1,35 @@
 <?php
 /**
  * Приём заявок с сайта AquaCore.
- * Отправляет заявку ОДНОВРЕМЕННО:
- *   1) в Telegram-группу (через бота);
- *   2) письмом на e-mail.
  *
- * Токен бота и параметры задаются на хостинге в файле telegram-secret.php
- * (скопируйте telegram-secret.example.php → telegram-secret.php и впишите токен).
+ *  POST  → отправляет заявку в Telegram-группу (через бота).
+ *  GET   → отдаёт публичный ключ web3forms, чтобы письмо ушло из браузера
+ *          (бесплатный тариф web3forms разрешает отправку только client-side).
  *
- * Сайт статический — этот PHP-файл работает на хостинге reg.ru (PHP включён).
+ * Токен бота и ключ задаются на хостинге в telegram-secret.php
+ * (скопируйте telegram-secret.example.php → telegram-secret.php).
  */
 
 header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+
+// ── Настройки ───────────────────────────────────────────────────────────
+$TELEGRAM_BOT_TOKEN = getenv('TELEGRAM_BOT_TOKEN') ?: '';
+$TELEGRAM_CHAT_ID   = getenv('TELEGRAM_CHAT_ID') ?: '-5380504235';
+$WEB3FORMS_KEY      = getenv('WEB3FORMS_KEY') ?: '';
+
+$secret = __DIR__ . '/telegram-secret.php';
+if (is_file($secret)) {
+    ob_start();          // на случай BOM/пробелов перед <?php
+    require $secret;
+    ob_end_clean();
+}
+
+// ── GET: отдать публичный ключ web3forms браузеру ───────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    echo json_encode(['web3forms_key' => $WEB3FORMS_KEY]);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -19,26 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// ── Настройки (токен/чат/почта) ─────────────────────────────────────────
-$TELEGRAM_BOT_TOKEN = getenv('TELEGRAM_BOT_TOKEN') ?: '';
-$TELEGRAM_CHAT_ID   = getenv('TELEGRAM_CHAT_ID') ?: '-5380504235';
-$MAIL_TO            = getenv('LEAD_MAIL_TO') ?: 'info@aqua-core.ru';
-// Бесплатный сервис доставки писем (web3forms.com) — ключ берётся бесплатно
-// по вашему e-mail. Если задан — письма идут через него (надёжно, без SMTP).
-$WEB3FORMS_KEY      = getenv('WEB3FORMS_KEY') ?: '';
-
-$secret = __DIR__ . '/telegram-secret.php';
-if (is_file($secret)) {
-    // Буферизуем на случай BOM/пробелов перед <?php в секрете,
-    // чтобы не было "headers already sent".
-    ob_start();
-    require $secret; // может переопределить переменные выше
-    ob_end_clean();
-}
-
-// ── Антиспам (honeypot) ─────────────────────────────────────────────────
+// ── Антиспам ────────────────────────────────────────────────────────────
 if (!empty($_POST['botcheck'])) {
-    echo json_encode(['success' => true]); // тихо игнорируем ботов
+    echo json_encode(['success' => true]);
     exit;
 }
 
@@ -57,20 +58,17 @@ if ($name === '' && $phone === '') {
     exit;
 }
 
-$lines = [
+$text = implode("\n", [
     "🆕 Новая заявка с сайта AquaCore",
     "",
     "👤 Имя: " . ($name ?: '—'),
     "📞 Телефон: " . ($phone ?: '—'),
     "🏢 Город / мойка: " . ($company ?: '—'),
     "💬 Комментарий: " . ($message ?: '—'),
-];
-$text = implode("\n", $lines);
+]);
 
+// ── Telegram ────────────────────────────────────────────────────────────
 $telegram_ok = false;
-$mail_ok = false;
-
-// ── 1) Telegram ─────────────────────────────────────────────────────────
 if ($TELEGRAM_BOT_TOKEN && $TELEGRAM_CHAT_ID) {
     $api = "https://api.telegram.org/bot{$TELEGRAM_BOT_TOKEN}/sendMessage";
     $payload = http_build_query([
@@ -91,60 +89,13 @@ if ($TELEGRAM_BOT_TOKEN && $TELEGRAM_CHAT_ID) {
         curl_close($ch);
         $telegram_ok = ($code === 200 && is_string($resp) && strpos($resp, '"ok":true') !== false);
     } else {
-        // запасной вариант, если cURL выключен
         $ctx = stream_context_create(['http' => [
-            'method'  => 'POST',
-            'header'  => 'Content-Type: application/x-www-form-urlencoded',
-            'content' => $payload,
-            'timeout' => 15,
+            'method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded',
+            'content' => $payload, 'timeout' => 15,
         ]]);
         $resp = @file_get_contents($api, false, $ctx);
         $telegram_ok = (is_string($resp) && strpos($resp, '"ok":true') !== false);
     }
 }
 
-// ── 2) E-mail ───────────────────────────────────────────────────────────
-if ($WEB3FORMS_KEY) {
-    // Доставка через web3forms.com (бесплатно). Письмо придёт на e-mail,
-    // указанный при получении ключа.
-    $body = json_encode([
-        'access_key' => $WEB3FORMS_KEY,
-        'subject'    => 'Новая заявка с сайта AquaCore',
-        'from_name'  => 'Сайт AquaCore',
-        'Имя'        => $name ?: '—',
-        'Телефон'    => $phone ?: '—',
-        'Город_мойка'=> $company ?: '—',
-        'Комментарий'=> $message ?: '—',
-    ], JSON_UNESCAPED_UNICODE);
-    if (function_exists('curl_init')) {
-        $ch = curl_init('https://api.web3forms.com/submit');
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => $body,
-            CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Accept: application/json'],
-            CURLOPT_TIMEOUT        => 15,
-        ]);
-        $resp = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        $mail_ok = ($code === 200 && is_string($resp) && strpos($resp, '"success":true') !== false);
-    }
-} elseif ($MAIL_TO) {
-    // Запасной вариант через PHP mail() (на некоторых хостингах может не работать).
-    $subject = '=?UTF-8?B?' . base64_encode('Новая заявка с сайта AquaCore') . '?=';
-    $headers = [
-        'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'From: AquaCore <info@aqua-core.ru>',
-    ];
-    $mail_ok = @mail($MAIL_TO, $subject, $text, implode("\r\n", $headers));
-}
-
-$success = $telegram_ok || $mail_ok;
-http_response_code($success ? 200 : 502);
-echo json_encode([
-    'success'  => $success,
-    'telegram' => $telegram_ok,
-    'mail'     => $mail_ok,
-]);
+echo json_encode(['success' => $telegram_ok, 'telegram' => $telegram_ok]);

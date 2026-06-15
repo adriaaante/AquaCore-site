@@ -36,17 +36,45 @@ export function LeadForm() {
     const data = new FormData(form);
 
     setStatus("sending");
-    try {
-      // Заявка уходит на хостинг (send.php) → в Telegram-группу и на почту.
-      const res = await fetch(FORM_ENDPOINT, { method: "POST", body: data });
-      const json = await res.json().catch(() => ({ success: false }));
-      if (res.ok && json.success) {
-        setStatus("ok");
-        form.reset();
-      } else {
-        setStatus("error");
+
+    // 1) Telegram — через send.php на хостинге.
+    const telegram = fetch(FORM_ENDPOINT, { method: "POST", body: data })
+      .then((r) => r.json())
+      .then((j) => !!j.success)
+      .catch(() => false);
+
+    // 2) Письмо — через web3forms прямо из браузера (бесплатный тариф разрешает
+    //    только client-side). Публичный ключ берём у send.php.
+    const email = (async () => {
+      try {
+        const cfg = await fetch(FORM_ENDPOINT).then((r) => r.json());
+        const key = cfg?.web3forms_key;
+        if (!key) return false;
+        const r = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: key,
+            subject: "Новая заявка с сайта AquaCore",
+            from_name: "Сайт AquaCore",
+            "Имя": data.get("name") || "—",
+            "Телефон": data.get("phone") || "—",
+            "Город/мойка": data.get("company") || "—",
+            "Комментарий": data.get("message") || "—",
+          }),
+        });
+        const j = await r.json();
+        return !!j.success;
+      } catch {
+        return false;
       }
-    } catch {
+    })();
+
+    const [tgOk, emailOk] = await Promise.all([telegram, email]);
+    if (tgOk || emailOk) {
+      setStatus("ok");
+      form.reset();
+    } else {
       setStatus("error");
     }
   }

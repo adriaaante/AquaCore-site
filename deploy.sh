@@ -42,10 +42,11 @@ fi
 echo "→ Копирую сайт в $WEB_ROOT ..."
 mkdir -p "$WEB_ROOT"
 if command -v rsync >/dev/null 2>&1; then
-  rsync -a --delete --exclude='.git' "$DIST_DIR"/ "$WEB_ROOT"/
+  # telegram-secret.php создаётся вручную на хостинге — НЕ удаляем его при синхронизации.
+  rsync -a --delete --exclude='.git' --exclude='telegram-secret.php' "$DIST_DIR"/ "$WEB_ROOT"/
 else
   # На случай, если rsync на тарифе нет.
-  find "$WEB_ROOT" -mindepth 1 -maxdepth 1 ! -name '.well-known' -exec rm -rf {} +
+  find "$WEB_ROOT" -mindepth 1 -maxdepth 1 ! -name '.well-known' ! -name 'telegram-secret.php' -exec rm -rf {} +
   cp -a "$DIST_DIR"/. "$WEB_ROOT"/
   rm -rf "$WEB_ROOT/.git"
 fi

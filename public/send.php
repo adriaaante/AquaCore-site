@@ -23,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $TELEGRAM_BOT_TOKEN = getenv('TELEGRAM_BOT_TOKEN') ?: '';
 $TELEGRAM_CHAT_ID   = getenv('TELEGRAM_CHAT_ID') ?: '-5380504235';
 $MAIL_TO            = getenv('LEAD_MAIL_TO') ?: 'info@aqua-core.ru';
+// Бесплатный сервис доставки писем (web3forms.com) — ключ берётся бесплатно
+// по вашему e-mail. Если задан — письма идут через него (надёжно, без SMTP).
+$WEB3FORMS_KEY      = getenv('WEB3FORMS_KEY') ?: '';
 
 $secret = __DIR__ . '/telegram-secret.php';
 if (is_file($secret)) {
@@ -97,12 +100,39 @@ if ($TELEGRAM_BOT_TOKEN && $TELEGRAM_CHAT_ID) {
 }
 
 // ── 2) E-mail ───────────────────────────────────────────────────────────
-if ($MAIL_TO) {
+if ($WEB3FORMS_KEY) {
+    // Доставка через web3forms.com (бесплатно). Письмо придёт на e-mail,
+    // указанный при получении ключа.
+    $body = json_encode([
+        'access_key' => $WEB3FORMS_KEY,
+        'subject'    => 'Новая заявка с сайта AquaCore',
+        'from_name'  => 'Сайт AquaCore',
+        'Имя'        => $name ?: '—',
+        'Телефон'    => $phone ?: '—',
+        'Город_мойка'=> $company ?: '—',
+        'Комментарий'=> $message ?: '—',
+    ], JSON_UNESCAPED_UNICODE);
+    if (function_exists('curl_init')) {
+        $ch = curl_init('https://api.web3forms.com/submit');
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $body,
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Accept: application/json'],
+            CURLOPT_TIMEOUT        => 15,
+        ]);
+        $resp = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        $mail_ok = ($code === 200 && is_string($resp) && strpos($resp, '"success":true') !== false);
+    }
+} elseif ($MAIL_TO) {
+    // Запасной вариант через PHP mail() (на некоторых хостингах может не работать).
     $subject = '=?UTF-8?B?' . base64_encode('Новая заявка с сайта AquaCore') . '?=';
     $headers = [
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8',
-        'From: AquaCore <noreply@aqua-core.ru>',
+        'From: AquaCore <info@aqua-core.ru>',
     ];
     $mail_ok = @mail($MAIL_TO, $subject, $text, implode("\r\n", $headers));
 }

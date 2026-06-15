@@ -13,4 +13,11 @@
 
 $TELEGRAM_BOT_TOKEN = 'ВСТАВЬТЕ_ТОКЕН_БОТА';   // напр. 1234567890:AA....
 $TELEGRAM_CHAT_ID   = '-5380504235';            // id вашей группы
-$MAIL_TO            = 'info@aqua-core.ru';        // куда дублировать письмом
+
+// Почта через бесплатный web3forms.com:
+//   1. Зайдите на https://web3forms.com, введите свой e-mail (info@aqua-core.ru)
+//   2. На почту придёт Access Key — вставьте его сюда. Письма будут приходить
+//      на этот e-mail. SMTP и пароли не нужны.
+$WEB3FORMS_KEY      = 'ВСТАВЬТЕ_КЛЮЧ_WEB3FORMS';
+
+$MAIL_TO            = 'info@aqua-core.ru';        // запасной вариант (PHP mail)

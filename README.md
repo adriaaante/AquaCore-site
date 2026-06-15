@@ -36,11 +36,14 @@ Email `info@aqua-core.ru` и телефон `+7 925 904-01-11` уже подст
 1. Создайте бота у [@BotFather](https://t.me/BotFather), получите токен.
 2. Добавьте бота в вашу Telegram-группу (и дайте право писать сообщения).
 3. Скопируйте `public/telegram-secret.example.php` → `telegram-secret.php`
-   (на хостинге, рядом с `send.php`) и впишите токен бота. Там же заданы
-   `TELEGRAM_CHAT_ID` (id группы) и `MAIL_TO` (почта для дублей).
+   (на хостинге, рядом с `send.php`) и впишите токен бота и `TELEGRAM_CHAT_ID`.
 4. Файл `telegram-secret.php` держите только на хостинге — в git его нет.
 
-Письма уходят через PHP `mail()` на адрес из `MAIL_TO` (по умолчанию `info@aqua-core.ru`).
+**Почта.** PHP `mail()` на reg.ru часто не доходит, поэтому письма идут через
+бесплатный [web3forms.com](https://web3forms.com): введите там свой e-mail —
+придёт Access Key, впишите его в `telegram-secret.php` как `WEB3FORMS_KEY`.
+Письма будут приходить на этот e-mail, без SMTP и паролей. Если ключ не задан —
+скрипт пробует обычный `mail()` на адрес `MAIL_TO`.
 
 ## Локальный запуск
 ```bash

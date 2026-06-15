@@ -24,11 +24,23 @@ deploy.sh                 авто-деплой на reg.ru по SSH
 ## ⚙️ Что отредактировать под себя
 Откройте **`src/config/site.ts`** и замените заглушки:
 - `contacts.telegram`, `contacts.whatsappHref` — ваши контакты;
-- `web3formsAccessKey` — ключ с [web3forms.com](https://web3forms.com) для приёма заявок с формы
-  (бесплатно). Пока ключ не вставлен, форма открывает почтовый клиент и пишет на ваш email;
 - `url` — ваш домен (для SEO).
 
 Email `info@aqua-core.ru` и телефон `+7 925 904-01-11` уже подставлены.
+
+## 📨 Заявки с формы → Telegram + почта
+Форма отправляет заявку на `send.php` (PHP-скрипт на хостинге), который шлёт её
+**одновременно в Telegram-группу и письмом на почту**.
+
+Настройка на хостинге reg.ru:
+1. Создайте бота у [@BotFather](https://t.me/BotFather), получите токен.
+2. Добавьте бота в вашу Telegram-группу (и дайте право писать сообщения).
+3. Скопируйте `public/telegram-secret.example.php` → `telegram-secret.php`
+   (на хостинге, рядом с `send.php`) и впишите токен бота. Там же заданы
+   `TELEGRAM_CHAT_ID` (id группы) и `MAIL_TO` (почта для дублей).
+4. Файл `telegram-secret.php` держите только на хостинге — в git его нет.
+
+Письма уходят через PHP `mail()` на адрес из `MAIL_TO` (по умолчанию `info@aqua-core.ru`).
 
 ## Локальный запуск
 ```bash

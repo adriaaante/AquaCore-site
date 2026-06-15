@@ -188,7 +188,7 @@ function ProductShots() {
         />
         <Reveal className="mx-auto mt-12 max-w-4xl">
           <VideoFrame
-            file="story-v6.mp4"
+            file="story-v7.mp4"
             poster="story-poster.jpg"
             label="AquaCore · Один визит: от заезда до 5 звёзд и бонусов"
             loop={false}

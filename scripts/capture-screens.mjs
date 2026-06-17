@@ -77,13 +77,15 @@ function cookiesFor(sessionValue) {
 const DESKTOP = { width: 1280, deviceScaleFactor: 2 }; // → 2560px по ширине
 const MOBILE = { width: 414, deviceScaleFactor: 2 }; // → 828px по ширине (как у текущих)
 
-/** @type {Array<{file:string,who:keyof typeof ROLE|null,url:string,device:'desktop'|'mobile',shot:'page'|'login'|'notifications'}>} */
+/** @type {Array<{file:string,who:keyof typeof ROLE|null,url:string,device:'desktop'|'mobile',shot:string,storage?:Record<string,string>,clipFrom?:string,clipTo?:string}>} */
 const TARGETS = [
   { file: "manager-client-card.jpg", who: "manager", url: `/manager/clients/${MANAGER_CUSTOMER_ID}`, device: "desktop", shot: "page" },
-  { file: "admin-archive.jpg", who: "admin", url: "/admin/archive", device: "desktop", shot: "page" },
+  // Архив — в режиме «С фото» (layout хранится в localStorage, общий с доской).
+  { file: "admin-archive.jpg", who: "admin", url: "/admin/archive", device: "desktop", shot: "page", storage: { "aquacore.board.layout": "photo" } },
   { file: "manager-notifications.jpg", who: "manager", url: "/manager/settings", device: "desktop", shot: "notifications" },
+  // «Ссылка для клиентов и модули» — карточки «Ссылка для входа» + «Дополнительные модули».
+  { file: "manager-client-link.jpg", who: "manager", url: "/manager/settings", device: "desktop", shot: "cardClip", clipFrom: "Ссылка для входа", clipTo: "Дополнительные модули", linkText: "https://aqua-core.ru/w/main" },
   { file: "client-bonuses.jpg", who: "client", url: "/client/bonuses", device: "mobile", shot: "page" },
-  { file: "login-telegram.jpg", who: null, url: `/login?w=${WASH_SLUG}`, device: "mobile", shot: "login" },
 ];
 
 async function run() {
@@ -92,14 +94,19 @@ async function run() {
   try {
     for (const t of TARGETS) {
       const vp = t.device === "desktop" ? DESKTOP : MOBILE;
+      const vh = t.shot === "cardClip" ? 2200 : t.device === "desktop" ? 900 : 896;
       const context = await browser.newContext({
-        viewport: { width: vp.width, height: t.device === "desktop" ? 900 : 896 },
+        viewport: { width: vp.width, height: vh },
         deviceScaleFactor: vp.deviceScaleFactor,
         locale: "ru-RU",
         reducedMotion: "reduce",
       });
       const sessionValue = t.who ? await mintSessionCookie(t.who) : null;
       await context.addCookies(cookiesFor(sessionValue));
+      if (t.storage)
+        await context.addInitScript((kv) => {
+          for (const [k, v] of Object.entries(kv)) localStorage.setItem(k, v);
+        }, t.storage);
       const page = await context.newPage();
       const dest = join(OUT_DIR, t.file);
 
@@ -107,13 +114,36 @@ async function run() {
       await page.waitForTimeout(1200);
       // Спрятать dev-индикатор Next.js (значок «N errors») — он только в dev.
       await page.addStyleTag({ content: "nextjs-portal{display:none !important}" });
+      // Дождаться подгрузки всех картинок (фото машин в архиве грузятся лениво).
+      await page
+        .waitForFunction(() => Array.from(document.images).every((i) => i.complete && i.naturalWidth > 0), { timeout: 8000 })
+        .catch(() => {});
 
-      if (t.shot === "login") {
-        // Показать вкладку входа через Telegram (не запускаем сам логин).
-        await page.getByRole("button", { name: /Клиент \(Telegram\)/ }).click();
-        await page.getByRole("button", { name: /Войти через Telegram/ }).waitFor({ timeout: 10000 });
-        await page.waitForTimeout(500);
-        await page.screenshot({ path: dest, type: "jpeg", quality: 82 });
+      if (t.shot === "cardClip") {
+        // Регион из двух соседних карточек настроек. Убираем «липкую» шапку,
+        // чтобы не перекрывала, и клипаем по их bounding box.
+        await page.addStyleTag({ content: "header{position:static !important}" });
+        // В dev ссылка строится из window.location.origin (localhost). Для
+        // витрины показываем продакшн-домен — именно его видит реальная мойка.
+        if (t.linkText)
+          await page.evaluate((txt) => {
+            const el = Array.from(document.querySelectorAll("code")).find((c) => /\/w\//.test(c.textContent || ""));
+            if (el) el.textContent = txt;
+          }, t.linkText);
+        await page.waitForTimeout(300);
+        const cardOf = (title) =>
+          page.getByText(title, { exact: true }).locator('xpath=ancestor::div[contains(@class,"rounded")][1]');
+        const a = await cardOf(t.clipFrom).boundingBox();
+        const b = await cardOf(t.clipTo).boundingBox();
+        if (!a || !b) throw new Error(`cardClip boxes not found for ${t.file}`);
+        const x = Math.min(a.x, b.x) - 16;
+        const y = a.y - 16;
+        await page.screenshot({
+          path: dest,
+          type: "jpeg",
+          quality: 82,
+          clip: { x: Math.max(0, x), y: Math.max(0, y), width: Math.max(a.width, b.width) + 32, height: b.y + b.height - a.y + 32 },
+        });
       } else if (t.shot === "notifications") {
         // Тугой кадр карточки матрицы маршрутизации (клиент + персонал по ролям).
         // element.screenshot сам проматывает к элементу и снимает его целиком.

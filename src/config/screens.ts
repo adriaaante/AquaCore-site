@@ -215,13 +215,6 @@ export const shots: Shot[] = [
     device: "mobile",
   },
   {
-    file: "login-telegram.jpg",
-    title: "Вход через Telegram",
-    caption: "Клиент входит в кабинет в одно касание — подтверждает номер прямо в Telegram, без паролей и SMS-кодов. Заодно подключаются уведомления.",
-    role: "Клиент",
-    device: "mobile",
-  },
-  {
     file: "client-booking.jpg",
     title: "Онлайн-запись",
     caption: "Клиент выбирает услугу, авто и время — администратор сразу видит его в очереди.",

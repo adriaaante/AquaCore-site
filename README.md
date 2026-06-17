@@ -75,3 +75,23 @@ chmod +x ~/aquacore-deploy.sh
 Скриншоты интерфейса в `public/screens/` сняты с работающего приложения AquaCore
 на демо-данных; видеоролики в `public/videos/` смонтированы из реальных записей
 экрана и сгенерированных сцен. Превью для соцсетей — `public/og.jpg`.
+
+### Перегенерация скриншотов (`scripts/capture-screens.mjs`)
+Скрипт снимает экраны с локально запущенного приложения. Тяжёлые зависимости
+(`playwright`, `next-auth`) намеренно НЕ в `package.json`, чтобы не утяжелять
+сборку сайта (`npm ci` в Pages) — ставятся разово при перегенерации.
+
+```bash
+# 1. В репозитории приложения AquaCore: поднять Postgres, накатить демо-данные,
+#    запустить dev-сервер (см. его README). Включить модули «Клиентский кабинет»
+#    и «Уведомления» для демо-мойки и привязать одного demo-клиента к CLIENT-юзеру
+#    (вход в кабинет — только через Telegram).
+# 2. В этом репозитории — поставить инструменты съёмки:
+npm i --no-save playwright next-auth@5.0.0-beta.25 && npx playwright install chromium
+# 3. Снять кадры (IDs берутся из демо-базы; AUTH_SECRET — из .env приложения):
+AUTH_SECRET=… MANAGER_USER_ID=… ADMIN_USER_ID=… CLIENT_USER_ID=… \
+MANAGER_CUSTOMER_ID=… WASH_ID=… WASH_SLUG=main \
+node scripts/capture-screens.mjs
+```
+Кадры сохраняются прямо в `public/screens/`. Список и подписи — в
+`src/config/screens.ts`.

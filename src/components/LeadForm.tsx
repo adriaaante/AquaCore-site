@@ -6,7 +6,9 @@ import { Icons } from "./Icons";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
-const KEY_PLACEHOLDER = "REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY";
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+/** Серверный приёмник заявок на хостинге: шлёт в Telegram и на почту. */
+const FORM_ENDPOINT = `${base}/send.php`;
 
 /** Русские сообщения для встроенной валидации браузера (по умолчанию они на
  *  языке браузера, напр. «Please fill out this field»). */
@@ -27,45 +29,54 @@ function ruValidate(el: HTMLInputElement | HTMLTextAreaElement) {
 
 export function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
-  const keyReady =
-    site.web3formsAccessKey && site.web3formsAccessKey !== KEY_PLACEHOLDER;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // Если ключ Web3Forms не настроен — открываем почтовый клиент с заполненным письмом.
-    if (!keyReady) {
-      const subject = encodeURIComponent("Заявка на AquaCore с сайта");
-      const body = encodeURIComponent(
-        `Имя: ${data.get("name") || ""}\n` +
-          `Телефон: ${data.get("phone") || ""}\n` +
-          `Город / мойка: ${data.get("company") || ""}\n` +
-          `Комментарий: ${data.get("message") || ""}`,
-      );
-      window.location.href = `mailto:${site.contacts.email}?subject=${subject}&body=${body}`;
-      setStatus("ok");
-      return;
+    setStatus("sending");
+
+    // 1) send.php на хостинге отправляет заявку и в Telegram, и письмом на
+    //    почту (серверно через Resend — как в основном приложении AquaCore).
+    const server = fetch(FORM_ENDPOINT, { method: "POST", body: data })
+      .then((r) => r.json())
+      .then((j) => ({ tg: !!j.telegram, email: !!j.email, ok: !!j.success }))
+      .catch(() => ({ tg: false, email: false, ok: false }));
+
+    // 2) Если серверная отправка письма не настроена (Resend не задан) —
+    //    запасной путь: web3forms прямо из браузера. Ключ берём у send.php.
+    async function sendViaWeb3forms() {
+      try {
+        const cfg = await fetch(FORM_ENDPOINT).then((r) => r.json());
+        const key = cfg?.web3forms_key;
+        if (!key) return false;
+        const r = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: key,
+            subject: "Новая заявка с сайта AquaCore",
+            from_name: "Сайт AquaCore",
+            "Имя": data.get("name") || "—",
+            "Телефон": data.get("phone") || "—",
+            "Город/мойка": data.get("company") || "—",
+            "Комментарий": data.get("message") || "—",
+          }),
+        });
+        const j = await r.json();
+        return !!j.success;
+      } catch {
+        return false;
+      }
     }
 
-    setStatus("sending");
-    try {
-      data.append("access_key", site.web3formsAccessKey);
-      data.append("subject", "Новая заявка на AquaCore");
-      data.append("from_name", "Сайт AquaCore");
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: data,
-      });
-      const json = await res.json();
-      if (json.success) {
-        setStatus("ok");
-        form.reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
+    const srv = await server;
+    const emailOk = srv.email || (await sendViaWeb3forms());
+    if (srv.tg || emailOk) {
+      setStatus("ok");
+      form.reset();
+    } else {
       setStatus("error");
     }
   }
@@ -78,9 +89,7 @@ export function LeadForm() {
         </div>
         <h3 className="mt-4 text-xl font-bold text-ink">Заявка отправлена!</h3>
         <p className="mt-2 text-sm text-ink-muted">
-          {keyReady
-            ? "Мы свяжемся с вами в ближайшее время и проведём демонстрацию."
-            : "Откроется ваш почтовый клиент — отправьте письмо, и мы свяжемся с вами."}
+          Мы свяжемся с вами в ближайшее время и проведём демонстрацию.
         </p>
         <button
           type="button"

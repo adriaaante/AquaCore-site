@@ -24,11 +24,34 @@ deploy.sh                 авто-деплой на reg.ru по SSH
 ## ⚙️ Что отредактировать под себя
 Откройте **`src/config/site.ts`** и замените заглушки:
 - `contacts.telegram`, `contacts.whatsappHref` — ваши контакты;
-- `web3formsAccessKey` — ключ с [web3forms.com](https://web3forms.com) для приёма заявок с формы
-  (бесплатно). Пока ключ не вставлен, форма открывает почтовый клиент и пишет на ваш email;
 - `url` — ваш домен (для SEO).
 
 Email `info@aqua-core.ru` и телефон `+7 925 904-01-11` уже подставлены.
+
+## 📨 Заявки с формы → Telegram + почта
+Форма отправляет заявку на `send.php` (PHP-скрипт на хостинге), который шлёт её
+**одновременно в Telegram-группу и письмом на почту**.
+
+Настройка на хостинге reg.ru:
+1. Создайте бота у [@BotFather](https://t.me/BotFather), получите токен.
+2. Добавьте бота в вашу Telegram-группу (и дайте право писать сообщения).
+3. Скопируйте `public/telegram-secret.example.php` → `telegram-secret.php`
+   (на хостинге, рядом с `send.php`) и впишите токен бота и `TELEGRAM_CHAT_ID`.
+4. Файл `telegram-secret.php` держите только на хостинге — в git его нет.
+
+**Почта (рекомендуется — Resend).** Письма с заявками уходят серверно через
+[Resend](https://resend.com) — тот же сервис, что и в основном приложении
+AquaCore (сброс пароля и т.д.). Это надёжно: письмо приходит так же, как
+сообщение в Telegram, без SMTP и без зависимости от браузера.
+1. Зарегистрируйтесь на [resend.com](https://resend.com), создайте API-ключ.
+2. Впишите его в `telegram-secret.php` как `RESEND_API_KEY`.
+3. Адрес получателя — `MAIL_TO` (по умолчанию `info@aqua-core.ru`).
+4. `EMAIL_FROM`: пока домен не подтверждён в Resend — оставьте
+   `onboarding@resend.dev`; после подтверждения домена укажите свой.
+
+**Запасной вариант — web3forms.** Если `RESEND_API_KEY` не задан, письмо
+отправляется из браузера через бесплатный [web3forms.com](https://web3forms.com):
+введите там свой e-mail, получите Access Key и впишите его как `WEB3FORMS_KEY`.
 
 ## Локальный запуск
 ```bash

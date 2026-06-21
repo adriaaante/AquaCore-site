@@ -13,6 +13,7 @@ import { PricingCards } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
 import { FaqJsonLd } from "@/components/JsonLd";
 import { Screenshots } from "@/components/Screenshots";
+import { InstallApp } from "@/components/InstallApp";
 import { RoiCalculator } from "@/components/RoiCalculator";
 import { LeadForm } from "@/components/LeadForm";
 
@@ -30,6 +31,7 @@ export default function HomePage() {
         <Anpr />
         <Loyalty />
         <ClientLink />
+        <InstallApp />
         <Quality />
         <Benefits />
         <Roi />

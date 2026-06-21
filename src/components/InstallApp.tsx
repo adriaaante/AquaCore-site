@@ -173,7 +173,8 @@ export function InstallApp() {
           <p className="mt-8 rounded-xl border border-brand-100 bg-brand-50/60 p-4 text-sm text-ink-soft">
             <span className="font-semibold text-brand-700">Иконка открывает именно вашу мойку.</span>{" "}
             У каждой мойки свой значок и свой быстрый вход: сотрудник попадает в рабочий
-            кабинет, клиент — в личный. Работает и на iPhone, и на Android.
+            кабинет, клиент — в личный. Открывается и на телефоне, и на планшете
+            администратора, и на компьютере — везде удобно, на iPhone и на Android.
           </p>
         </Reveal>
 

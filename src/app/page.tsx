@@ -25,20 +25,19 @@ export default function HomePage() {
         <Hero />
         <Pain />
         <MultiService />
+        <KeyFeatures />
         <ProductShots />
         <Themes />
-        <KeyFeatures />
         <Anpr />
         <Loyalty />
         <ClientLink />
         <InstallApp />
         <Quality />
+        <Analytics />
+        <Security />
+        <Roles />
         <Benefits />
         <Roi />
-        <Analytics />
-        <Roles />
-        <Security />
-        <Integrations />
         <Pricing />
         <Steps />
         <FaqSection />
@@ -181,7 +180,7 @@ function MultiService() {
 /* ───────────────────────── PRODUCT SHOTS ──────────────────────── */
 function ProductShots() {
   return (
-    <section id="skrinshoty" className="section bg-slate-50">
+    <section id="skrinshoty" className="section">
       <div className="container-x">
         <SectionHeading
           eyebrow="Как это выглядит"
@@ -246,7 +245,7 @@ function ThemePanel({ dark }: { dark: boolean }) {
 
 function Themes() {
   return (
-    <section className="section">
+    <section className="section bg-slate-50">
       <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="eyebrow">
@@ -287,7 +286,7 @@ function Themes() {
 /* ───────────────────────── KEY FEATURES ───────────────────────── */
 function KeyFeatures() {
   return (
-    <section id="vozmozhnosti" className="section">
+    <section id="vozmozhnosti" className="section bg-slate-50">
       <div className="container-x">
         <SectionHeading
           eyebrow="Возможности"
@@ -342,6 +341,7 @@ function Anpr() {
               "Скан с планшета администратора или камера на въезде",
               "Поддержка ГОСТ-номеров и кириллицы",
               "Предупреждение о повторном визите за день",
+              "Собственное решение — без привязки к одному поставщику",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3 text-slate-200">
                 <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-brand-500/20 text-brand-300">
@@ -433,7 +433,7 @@ function Loyalty() {
 /* ─────────────────────── CLIENT LINK ──────────────────────────── */
 function ClientLink() {
   return (
-    <section className="section">
+    <section className="section bg-slate-50">
       <div className="container-x grid min-w-0 items-center gap-12 lg:grid-cols-2 [&>*]:min-w-0">
         <Reveal>
           <span className="eyebrow">
@@ -571,13 +571,13 @@ function Analytics() {
 /* ───────────────────────────── ROLES ──────────────────────────── */
 function Roles() {
   const roles = [
-    { icon: "chart" as const, t: "Менеджер", d: "Аналитика, цены, сотрудники, лояльность и настройки — вход по email." },
+    { icon: "chart" as const, t: "Менеджер", d: "Аналитика, цены, сотрудники, лояльность и настройки. Вход и восстановление доступа — по email с подтверждением почты." },
     { icon: "board" as const, t: "Администратор", d: "Доска мойки, приём и оплата, смена и касса — быстрый вход по PIN." },
     { icon: "car" as const, t: "Исполнитель", d: "Простая очередь задач с крупными кнопками и заработком в реальном времени." },
     { icon: "phone" as const, t: "Клиент", d: "Личный кабинет: история, бонусы, оценки и онлайн-запись." },
   ];
   return (
-    <section className="section bg-slate-50">
+    <section className="section">
       <div className="container-x">
         <SectionHeading
           eyebrow="Роли и кабинеты"
@@ -651,7 +651,7 @@ function Security() {
     { icon: "refresh" as const, t: "Бэкапы и автотесты", d: "Ежедневные резервные копии базы и десятки автотестов на каждое обновление системы." },
   ];
   return (
-    <section className="section">
+    <section className="section bg-slate-50">
       <div className="container-x">
         <SectionHeading
           eyebrow="Контроль и надёжность"
@@ -677,46 +677,10 @@ function Security() {
   );
 }
 
-/* ───────────────────────── INTEGRATIONS ───────────────────────── */
-function Integrations() {
-  const items = [
-    { icon: "bell" as const, t: "Telegram клиентам и персоналу", d: "«Машина готова» и чек с бонусами — клиенту; события по ролям — сотрудникам. Каждое сообщение подписано названием вашей мойки." },
-    { icon: "link" as const, t: "Ссылка и QR для клиентов", d: "Постоянная ссылка вашей мойки ведёт клиента сразу в его кабинет — повесьте QR-код на кассе." },
-    { icon: "scan" as const, t: "Распознавание номеров", d: "Своё решение распознавания без привязки к одному поставщику." },
-    { icon: "mail" as const, t: "Email", d: "Подтверждение почты и восстановление доступа для сотрудников." },
-  ];
-  return (
-    <section className="section bg-slate-50">
-      <div className="container-x">
-        <SectionHeading
-          eyebrow="Интеграции"
-          title="Подключается к привычным каналам"
-        />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((it, i) => {
-            const Icon = Icons[it.icon];
-            return (
-              <Reveal key={it.t} delay={(i % 4) * 70}>
-                <div className="card card-hover h-full">
-                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-4 font-bold text-ink">{it.t}</h3>
-                  <p className="mt-2 text-sm text-ink-muted">{it.d}</p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─────────────────────────── PRICING ──────────────────────────── */
 function Pricing() {
   return (
-    <section id="tarify" className="section">
+    <section id="tarify" className="section bg-slate-50">
       <div className="container-x">
         <SectionHeading
           eyebrow="Тарифы"

@@ -84,3 +84,7 @@ curl -s -X POST https://aqua-core.ru/send.php \
 Ранее `origin/main` на GitHub содержал устаревшую несвязанную линию (без send.php,
 Telegram, скриншотов; деплой на GitHub Pages). Актуальная линия сайта — это рабочая
 ветка; `main` приведён к ней. Сборку для reg.ru делает `build-dist.yml`, а не Pages.
+
+**Откат почтовой миграции:** состояние main ДО перевода почты на reg.ru
+(send.php ещё через Resend) сохранено в ветке `backup/pre-email-migration`
+(есть и в репо приложения AquaCore — там тоже до SMTP-правок).

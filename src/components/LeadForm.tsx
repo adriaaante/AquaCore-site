@@ -38,7 +38,7 @@ export function LeadForm() {
     setStatus("sending");
 
     // 1) send.php на хостинге отправляет заявку и в Telegram, и письмом на
-    //    почту (серверно через Resend — как в основном приложении AquaCore).
+    //    почту (серверно через почту хостинга reg.ru — данные не покидают РФ).
     const server = fetch(FORM_ENDPOINT, { method: "POST", body: data })
       .then((r) => r.json())
       .then((j) => ({ tg: !!j.telegram, email: !!j.email, ok: !!j.success }))

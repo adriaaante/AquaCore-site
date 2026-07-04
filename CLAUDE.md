@@ -13,7 +13,10 @@
 1. `push` в **`main`** → GitHub Action `.github/workflows/build-dist.yml`
 2. Action собирает статику и публикует её в ветку **`regru-dist`** (готовые файлы).
 3. На хостинге reg.ru скрипт **`~/aquacore-deploy.sh`** забирает `regru-dist`
-   и копирует в корень сайта (rsync, исключая `telegram-secret.php`).
+   и копирует в корень сайта (rsync, исключая `telegram-secret.php` и
+   `.well-known` — иначе rsync --delete сносит ACME-челленджи и ломает
+   перевыпуск SSL). Эталон скрипта: `scripts/aquacore-deploy.sh` в этом репо
+   (на хостинге живёт своя копия — синхронизировать руками).
 
 Вывод: **изменения на живом сайте появляются только после `~/aquacore-deploy.sh`**,
 а он работает только после успешной сборки Action (ветка `regru-dist` обновилась).

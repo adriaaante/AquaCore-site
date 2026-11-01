@@ -24,11 +24,27 @@
 Файлы из `public/` (в т.ч. `send.php`) копируются в корень `out/` при сборке и
 попадают на хостинг как есть.
 
+### Автовыкатка (cron на хостинге, одна строка)
+Чтобы не запускать `~/aquacore-deploy.sh` руками — в ISPmanager → «Планировщик (cron)», раз в 5 минут:
+```
+cd ~/aquacore-dist && git fetch -q origin regru-dist && [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/regru-dist)" ] && ~/aquacore-deploy.sh >> ~/aquacore-deploy.log 2>&1
+```
+Сдвинулась `regru-dist` (после сборки Action) → выкатка; нет — ничего. Лог — `~/aquacore-deploy.log`.
+
 ### Хостинг reg.ru
 - Корень сайта: `/var/www/u3544543/data/www/aqua-core.ru`
 - Обновление сайта: `~/aquacore-deploy.sh`
 - Секреты живут только на хостинге в `telegram-secret.php` (рядом с `send.php`),
   в git его НЕТ; deploy.sh его не перезаписывает.
+
+## Яндекс.Метрика и Вебмастер (с 01.11.2026)
+Аккаунт владельца, приложение Яндекс OAuth `aa7ee3fd392e48cf86477d29eb1d150e`, токен — секрет среды
+`ZAJDELADRIAN_YANDEX_OAUTH_TOKEN`, user_id Вебмастера 389467762.
+- Счётчик **№ 113977705** — `src/lib/metrika.ts`. Грузится кодом только после «Принять все» в `CookieNotice`
+  (ключ `aquacore.consent-v2`; «Настройки cookie» в подвале сбрасывает выбор), переходы без перезагрузки — `hit`.
+  Цель `lead` («Заявка отправлена») — `LeadForm` после успешной отправки; автоцели включены. Вебвизор выключен.
+- Подтверждение Вебмастера — `metadata.verification.yandex` в `src/app/layout.tsx` (не удалять).
+- Политика §7 описывает Метрику (Яндекс — обработчик по поручению, РФ). Меняешь аналитику — меняй и её.
 
 ## Заявки с формы → Telegram + почта
 - Форма: `src/components/LeadForm.tsx` → POST на `/send.php`.

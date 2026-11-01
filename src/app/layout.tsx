@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   },
   description: site.description,
   alternates: { canonical: "./" },
+  // Подтверждение прав в Яндекс.Вебмастере (аккаунт владельца, 01.11.2026). Не удалять: Вебмастер перепроверяет.
+  verification: { yandex: "241c24c30055753d" },
   keywords: [
     "программа для автомойки",
     "CRM для автомойки",

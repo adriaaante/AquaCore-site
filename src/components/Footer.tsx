@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/config/site";
 import { Logo } from "./Logo";
 import { Icons } from "./Icons";
+import { CookieSettingsLink } from "./CookieNotice";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -96,6 +97,9 @@ export function Footer() {
               <Link href="/soglasie/" className="hover:text-brand-600">
                 Согласие на обработку данных
               </Link>
+            </li>
+            <li>
+              <CookieSettingsLink />
             </li>
           </ul>
         </div>

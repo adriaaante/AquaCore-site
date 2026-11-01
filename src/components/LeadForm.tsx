@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { site } from "@/config/site";
 import { Icons } from "./Icons";
+import { reachGoal } from "@/lib/metrika";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
@@ -75,6 +76,7 @@ export function LeadForm() {
     const emailOk = srv.email || (await sendViaWeb3forms());
     if (srv.tg || emailOk) {
       setStatus("ok");
+      reachGoal("lead");
       form.reset();
     } else {
       setStatus("error");
